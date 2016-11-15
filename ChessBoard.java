@@ -20,11 +20,7 @@ public class ChessBoard extends GridPane
             {
                 Integer jVal = new Integer(j);
                 //For testing that I got the squares located correctly for both colors
-                spaces[i][j] = new Space(i, j, (event) ->
-                    {
-                        System.out.println(iVal.intValue() + " " + jVal.intValue());
-                    }
-                );
+                spaces[i][j] = new Space(i, j);
                 
                 //if white, add Spaces so ensured bottom left is 0,0
                 //if Black, add Spaces so ensured bottom left is 7,7

@@ -16,20 +16,9 @@ public class Space extends Button
         this.piece = null;
         this.setMinHeight(400/8); //stage size/8
         this.setMinWidth(400/8); //stage size/8
+        this.setOnAction(e -> onClick());
     }
     
-    //initialize with Event Handler
-    public Space(int x, int y, EventHandler<ActionEvent> e)
-    {
-        super();
-        this.x = x;
-        this.y = y;
-        this.piece = null;
-        this.setMinHeight(400/8); //stage size/8
-        this.setMinWidth(400/8); //stage size/8
-        this.setOnAction(e);
-    }
-
     // returns true if space is occupied
     public boolean isOccupied()
     {
@@ -65,4 +54,10 @@ public class Space extends Button
     public void setY(int yIn) {this.y = yIn;}
     public int getY() {return this.y;}
     
+    // Used whenever a space is clicked on
+    public void onClick()
+    {
+        // Temporary debug code
+        System.out.println("Space: " + getX() + ", " + getY());
+    }
 }
