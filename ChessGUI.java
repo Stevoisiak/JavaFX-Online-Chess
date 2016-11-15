@@ -55,44 +55,12 @@ public class ChessGUI extends Application
 
         //draws board differently if White or Black
         ChessBoard board = new ChessBoard(WHITE);
-
         vbox.getChildren().add(board);
         
-        // Menu -----------------------
-        MenuBar menuBar = new MenuBar();
+        // Add menuBar
+        MenuBar menuBar = generateMenuBar();
         root.setTop(menuBar);
 
-        Menu gameMenu = new Menu("Game");
-        menuBar.getMenus().add(gameMenu);
-
-        MenuItem menuItemNewGame = new MenuItem("New Game");
-        menuItemNewGame.setOnAction(e -> onNewGame());
-        //menuItemNewGame.setGraphic( new ImageView( new Image("assets/icons/quit.png", 16, 16, true, true) ) );
-        menuItemNewGame.setAccelerator( new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN) );
-        gameMenu.getItems().add(menuItemNewGame);
-
-        MenuItem menuItemQuit = new MenuItem("Quit");
-        menuItemQuit.setOnAction(e -> onQuit());
-        //menuItemQuit.setGraphic( new ImageView( new Image("assets/icons/quit.png", 16, 16, true, true) ) );
-        menuItemQuit.setAccelerator( new KeyCodeCombination(KeyCode.Q, KeyCombination.CONTROL_DOWN) );
-        gameMenu.getItems().add(menuItemQuit);
-
-        Menu menuHelp = new Menu("Help");
-        menuBar.getMenus().add(menuHelp);
-
-        MenuItem menuItemAbout = new MenuItem("About");
-        //menuItemAbout.setGraphic( new ImageView( new Image("assets/icons/about.png", 16, 16, true, true) ) );
-        menuItemAbout.setAccelerator( new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN) ); // BUG: Key combo not working
-        menuItemAbout.setOnAction(e -> onDisplayAbout());
-        menuHelp.getItems().add(menuItemAbout);
-
-        MenuItem menuItemHelp = new MenuItem("Help");
-        //menuItemHelp.setGraphic( new ImageView( new Image("assets/icons/help.png", 16, 16, true, true) ) );
-        menuItemHelp.setAccelerator( new KeyCodeCombination(KeyCode.H, KeyCombination.CONTROL_DOWN) );
-        menuItemHelp.setOnAction(e -> onDisplayHelp());
-        menuHelp.getItems().add(menuItemHelp);
-
-        // custom code above --------------------------------------------
         mainStage.show();
     }
 
@@ -127,7 +95,6 @@ public class ChessGUI extends Application
             playerType = "Black";
         //else if (result.get() == buttonTypeOffline)
         //  playerType = "Offline";
-
     }
 
     // Quits program
@@ -165,5 +132,43 @@ public class ChessGUI extends Application
         infoAlert.setContentText("This is a simple networked chess program.\n" +
             "To start, pick a color to play as.");
         infoAlert.showAndWait();
+    }
+    
+    // Generate main menu bar
+    public MenuBar generateMenuBar()
+    {
+        MenuBar menuBar = new MenuBar();
+        
+        Menu gameMenu = new Menu("Game");
+        menuBar.getMenus().add(gameMenu);
+
+        MenuItem menuItemNewGame = new MenuItem("New Game");
+        menuItemNewGame.setOnAction(e -> onNewGame());
+        //menuItemNewGame.setGraphic( new ImageView( new Image("assets/icons/quit.png", 16, 16, true, true) ) );
+        menuItemNewGame.setAccelerator( new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN) );
+        gameMenu.getItems().add(menuItemNewGame);
+
+        MenuItem menuItemQuit = new MenuItem("Quit");
+        menuItemQuit.setOnAction(e -> onQuit());
+        //menuItemQuit.setGraphic( new ImageView( new Image("assets/icons/quit.png", 16, 16, true, true) ) );
+        menuItemQuit.setAccelerator( new KeyCodeCombination(KeyCode.Q, KeyCombination.CONTROL_DOWN) );
+        gameMenu.getItems().add(menuItemQuit);
+
+        Menu menuHelp = new Menu("Help");
+        menuBar.getMenus().add(menuHelp);
+
+        MenuItem menuItemAbout = new MenuItem("About");
+        //menuItemAbout.setGraphic( new ImageView( new Image("assets/icons/about.png", 16, 16, true, true) ) );
+        menuItemAbout.setAccelerator( new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN) ); // BUG: Key combo not working
+        menuItemAbout.setOnAction(e -> onDisplayAbout());
+        menuHelp.getItems().add(menuItemAbout);
+
+        MenuItem menuItemHelp = new MenuItem("Help");
+        //menuItemHelp.setGraphic( new ImageView( new Image("assets/icons/help.png", 16, 16, true, true) ) );
+        menuItemHelp.setAccelerator( new KeyCodeCombination(KeyCode.H, KeyCombination.CONTROL_DOWN) );
+        menuItemHelp.setOnAction(e -> onDisplayHelp());
+        menuHelp.getItems().add(menuItemHelp);
+
+        return menuBar;
     }
 }
