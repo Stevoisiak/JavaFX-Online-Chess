@@ -1,4 +1,7 @@
 *.class
+
+# BlueJ Files
+__SHELL[0-9]*
 *.ctxt
 
 # Mobile Tools for Java (J2ME)
