@@ -1,0 +1,48 @@
+Networked Chess Design Doc
+By Maxwell Sirotin & Steven Vascellaro
+Chess Icons by "Colin M.L. Burnett"
+
+Chess
+
+1) GUI
+	1) Player *selects* to play as white (Server host) or black (client)
+		1) White: Program waits for player to connect
+		2) Black: Actively searches for server to connect to
+	2) Chess board is drawn for both players
+		1) Chess board is viewed from opposite sides for white/black
+	3) White player gets first turn, followed by black
+		1) Text below board says "[Your:Opponent's] turn. (white:black)"
+	4) When it's the player's turn, they can click on any of their pieces
+		1) When the player clicks a piece, display valid moves for the piece on that space
+		2) Valid moves are displayed via spites overlapping each valid space
+	5) Player can click any highlighted space to move the piece
+	6) Other player can now make their move
+
+
+2) Chess Piece
+
+Bool isFrozen; //Freeze board when not the player's turn
+
+	A) Individual onject for each chess piece
+	B) Contains valid move options as change in X & Y
+	C) Base class for Piece
+		1) Piece must be initialized with it's color
+		2) Creat new objects for each piece type as an extension of class Piece
+	D) Moves stored as enum (Possible move class?)
+		Move.UP = {0, 1}
+		Move.UP_RIGHT = {1, 1}
+		Move.LEFT = {-1, 0}
+		MOVE.L_UP_RIGHT{1, 2}
+	E) Pawn promotion handled by simple menu selection. Old piece replaced
+	F) Piece color/type cannot be changed once set
+		
+		
+3) Chess Board
+	A) Containes a labeled 8x8 grid
+	B) Has a method to check if space is empty
+	C) Each space can contain a piece object
+
+
+4) Space
+	A) Series of buttons
+	B) Each contains chess piece
