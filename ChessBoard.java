@@ -68,32 +68,23 @@ public class ChessBoard extends GridPane
                 switch (s.getX())
                 {
                     case 0: s.setPiece( new Piece("rook", true) );
-                    break;
-
+                        break;
                     case 1: s.setPiece( new Piece("knight", true) );
-                    break;
-
+                        break;
                     case 2: s.setPiece( new Piece("bishop", true) );
-                    break;
-
+                        break;
                     case 3: s.setPiece( new Piece("queen", true) );
-                    break;
-
+                        break;
                     case 4: s.setPiece( new Piece("king", true) );
-                    break;
-
+                        break;
                     case 5: s.setPiece( new Piece("bishop", true) );
-                    break;
-
+                        break;
                     case 6: s.setPiece( new Piece("knight", true) );
-                    break;
-
+                        break;
                     case 7: s.setPiece( new Piece("rook", true) );
-                    break;
-
+                        break;
                 }
             }
-
         }
         //black pieces
         else if(s.getY() == 6  || s.getY() == 7) //yes, I am assuming the board is 8x8
@@ -103,29 +94,21 @@ public class ChessBoard extends GridPane
                 switch (s.getX())
                 {
                     case 0: s.setPiece( new Piece("rook", false) );
-                    break;
-
+                        break;
                     case 1: s.setPiece( new Piece("knight", false) );
-                    break;
-
+                        break;
                     case 2: s.setPiece( new Piece("bishop", false) );
-                    break;
-                    
+                        break;
                     case 3: s.setPiece( new Piece("queen", false) );
-                    break;
-                    
+                        break;
                     case 4: s.setPiece( new Piece("king", false) );
-                    break;
-
+                        break;
                     case 5: s.setPiece( new Piece("bishop", false) );
-                    break;
-
+                        break;
                     case 6: s.setPiece( new Piece("knight", false) );
-                    break;
-
+                        break;
                     case 7: s.setPiece( new Piece("rook", false) );
-                    break;
-
+                        break;
                 }
             }
         }
