@@ -1,5 +1,6 @@
 import javafx.scene.control.*;
 import javafx.event.*;
+import javafx.scene.*;
 import javafx.scene.image.*;
 
 public class Space extends Button
@@ -16,7 +17,6 @@ public class Space extends Button
         this.piece = null;
         this.setMinHeight(400/8); //stage size/8
         this.setMinWidth(400/8); //stage size/8
-        this.setOnAction(e -> onClick());
     }
     
     // returns true if space is occupied
@@ -33,6 +33,7 @@ public class Space extends Button
     {
         Piece tmpPiece = this.piece;
         this.piece = null;
+		this.setGraphic(new ImageView());
         return tmpPiece;
     }
     
@@ -54,10 +55,4 @@ public class Space extends Button
     public void setY(int yIn) {this.y = yIn;}
     public int getY() {return this.y;}
     
-    // Used whenever a space is clicked on
-    public void onClick()
-    {
-        // Temporary debug code
-        System.out.println("Space: " + getX() + ", " + getY());
-    }
 }

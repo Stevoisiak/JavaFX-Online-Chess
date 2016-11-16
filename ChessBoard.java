@@ -1,3 +1,4 @@
+import javafx.event.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.image.*;
@@ -7,26 +8,57 @@ public class ChessBoard extends GridPane
     public Space[][] spaces = new Space[8][8];
     // const
 
+    //
+    public Space activeSpace = null;
+
     public ChessBoard(boolean playerIsWhite)
     {
         //cause always call super
         super();
-        
+
         // initialize 8x8 array of spaces
         for (int i = 0; i < spaces[0].length; i++)
         { 
-            Integer iVal = new Integer(i); //gets value into Lambda, for testing
+            Integer iVal = new Integer(i); //gets value into EventHandler
             for (int j = 0; j < spaces[1].length; j++)
             {
-                Integer jVal = new Integer(j);
-                //For testing that I got the squares located correctly for both colors
+                Integer jVal = new Integer(j); //gets value into EventHandler
                 spaces[i][j] = new Space(i, j);
-                
+
                 //if white, add Spaces so ensured bottom left is 0,0
                 //if Black, add Spaces so ensured bottom left is 7,7
                 if (playerIsWhite) { this.add(spaces[i][j], i, 8 - j); }
                 else { this.add(spaces[i][j], 8 - i, j); }
-                
+
+                EventHandler<ActionEvent> spaceClick = new EventHandler<ActionEvent>()
+                    {
+                        public void handle(ActionEvent event)
+                        {
+
+							//if there is active square and it has a piece
+                            if (activeSpace != null && activeSpace.getPiece() != null)
+                            {
+								//move piece from active space to clicked space
+                                spaces[iVal.intValue()][jVal.intValue()].setPiece(
+                                	activeSpace.releasePiece()  );
+
+								//decouples space from space on board
+                                activeSpace = null;
+                            }
+                            else 
+                            {
+								//if there's a piece on the selected square when no active square
+                                if(spaces[iVal.intValue()][jVal.intValue()].getPiece() != null)
+                                {
+									//make active square clicked square
+                                    activeSpace = spaces[iVal.intValue()][jVal.intValue()];
+                                }
+                            }
+                        }
+                    };
+
+                spaces[i][j].setOnAction(spaceClick);
+
                 //puts pieces in start positions
                 defineStartPositions(spaces[i][j]);
             }
@@ -37,6 +69,17 @@ public class ChessBoard extends GridPane
     public Space getSpace(int x, int y)
     {
         return spaces[x][y];
+    }
+
+    //Use this to get a space, using GridPane methods will (I think) cause color problems
+    public void setActiveSpace(Space s)
+    {
+        activeSpace = s;
+    }
+
+    public Space getActiveSpace()
+    {
+        return activeSpace;
     }
 
     // prints location of all pieces on the board
@@ -68,21 +111,21 @@ public class ChessBoard extends GridPane
                 switch (s.getX())
                 {
                     case 0: s.setPiece( new Piece("rook", true) );
-                        break;
+                    break;
                     case 1: s.setPiece( new Piece("knight", true) );
-                        break;
+                    break;
                     case 2: s.setPiece( new Piece("bishop", true) );
-                        break;
+                    break;
                     case 3: s.setPiece( new Piece("queen", true) );
-                        break;
+                    break;
                     case 4: s.setPiece( new Piece("king", true) );
-                        break;
+                    break;
                     case 5: s.setPiece( new Piece("bishop", true) );
-                        break;
+                    break;
                     case 6: s.setPiece( new Piece("knight", true) );
-                        break;
+                    break;
                     case 7: s.setPiece( new Piece("rook", true) );
-                        break;
+                    break;
                 }
             }
         }
@@ -94,21 +137,21 @@ public class ChessBoard extends GridPane
                 switch (s.getX())
                 {
                     case 0: s.setPiece( new Piece("rook", false) );
-                        break;
+                    break;
                     case 1: s.setPiece( new Piece("knight", false) );
-                        break;
+                    break;
                     case 2: s.setPiece( new Piece("bishop", false) );
-                        break;
+                    break;
                     case 3: s.setPiece( new Piece("queen", false) );
-                        break;
+                    break;
                     case 4: s.setPiece( new Piece("king", false) );
-                        break;
+                    break;
                     case 5: s.setPiece( new Piece("bishop", false) );
-                        break;
+                    break;
                     case 6: s.setPiece( new Piece("knight", false) );
-                        break;
+                    break;
                     case 7: s.setPiece( new Piece("rook", false) );
-                        break;
+                    break;
                 }
             }
         }
