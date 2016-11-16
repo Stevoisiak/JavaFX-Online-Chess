@@ -57,7 +57,7 @@ public class ChessBoard extends GridPane
         return pieceList;
     }
 
-    //defines the start positions
+    //define the starting piece positions
     public void defineStartPositions(Space s)
     {
         //white pieces
@@ -87,7 +87,7 @@ public class ChessBoard extends GridPane
             }
         }
         //black pieces
-        else if(s.getY() == 6  || s.getY() == 7) //yes, I am assuming the board is 8x8
+        else if(s.getY() == 6  || s.getY() == 7)
         {
             if (s.getY() == 6){s.setPiece( new Piece("pawn", false) );}
             else{
