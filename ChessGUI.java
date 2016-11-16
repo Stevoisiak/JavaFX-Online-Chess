@@ -53,8 +53,13 @@ public class ChessGUI extends Application
         vbox.setAlignment( Pos.TOP_CENTER );
         root.setCenter(vbox);
 
-        //draws board differently if White or Black
-        ChessBoard board = new ChessBoard(WHITE);
+        // Game logic ---
+        
+        // prompt user to select team color
+        boolean playerColor = choosePlayerColor();
+        
+        // draw chessboard
+        ChessBoard board = new ChessBoard(playerColor);
         vbox.getChildren().add(board);
         
         // Add menuBar
@@ -63,12 +68,15 @@ public class ChessGUI extends Application
 
         mainStage.show();
     }
-
-    // Start a new game
-    public void onNewGame()
+    
+    // Prompts the player to choose team color
+    // TODO: Change return type to enum so we can return NULL
+    //       if user exits without selecting a color;
+    public boolean choosePlayerColor()
     {
-        String playerType;
-
+        // Set to white by default
+        boolean playerColor = WHITE;
+        
         // TODO: If a chess game is currently ongoing, warn that
         //         "Starting a new game while a match is in progress will count as a forfiet."
         //         "Do you still want to start a new game?"
@@ -80,21 +88,24 @@ public class ChessGUI extends Application
         Alert newGameAlert = new Alert(AlertType.CONFIRMATION);
         newGameAlert.setTitle("Start new game");
         newGameAlert.setHeaderText(null);
-        newGameAlert.setContentText("Pick game type");
+        newGameAlert.setContentText("Pick team color");
 
         ButtonType buttonTypeWhite = new ButtonType("Play White (Server)");
         ButtonType buttonTypeBlack = new ButtonType("Play Black (Client)");
-        //ButtonType buttonTypeOffline = new ButtonType("Play Offline");
 
         newGameAlert.getButtonTypes().setAll(buttonTypeWhite, buttonTypeBlack);
         Optional<ButtonType> result = newGameAlert.showAndWait();
 
         if (result.get() == buttonTypeWhite)
-            playerType = "White";
+        {
+            playerColor = WHITE;
+        }
         else if (result.get() == buttonTypeBlack)
-            playerType = "Black";
-        //else if (result.get() == buttonTypeOffline)
-        //  playerType = "Offline";
+        {
+            playerColor = BLACK;
+        }
+        
+        return playerColor;
     }
 
     // Quits program
@@ -122,17 +133,6 @@ public class ChessGUI extends Application
             "Chess Icons by \"Colin M.L. Burnett\".");
         infoAlert.showAndWait();
     }
-
-    // Display 'help' menu
-    public void onDisplayHelp()
-    {
-        Alert infoAlert = new Alert(AlertType.INFORMATION);
-        infoAlert.setTitle("Help");
-        infoAlert.setHeaderText(null); 
-        infoAlert.setContentText("This is a simple networked chess program.\n" +
-            "To start, pick a color to play as.");
-        infoAlert.showAndWait();
-    }
     
     // Generate main menu bar
     public MenuBar generateMenuBar()
@@ -141,12 +141,6 @@ public class ChessGUI extends Application
         
         Menu gameMenu = new Menu("Game");
         menuBar.getMenus().add(gameMenu);
-
-        MenuItem menuItemNewGame = new MenuItem("New Game");
-        menuItemNewGame.setOnAction(e -> onNewGame());
-        //menuItemNewGame.setGraphic( new ImageView( new Image("assets/icons/quit.png", 16, 16, true, true) ) );
-        menuItemNewGame.setAccelerator( new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN) );
-        gameMenu.getItems().add(menuItemNewGame);
 
         MenuItem menuItemQuit = new MenuItem("Quit");
         menuItemQuit.setOnAction(e -> onQuit());
@@ -162,12 +156,6 @@ public class ChessGUI extends Application
         menuItemAbout.setAccelerator( new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN) ); // BUG: Key combo not working
         menuItemAbout.setOnAction(e -> onDisplayAbout());
         menuHelp.getItems().add(menuItemAbout);
-
-        MenuItem menuItemHelp = new MenuItem("Help");
-        //menuItemHelp.setGraphic( new ImageView( new Image("assets/icons/help.png", 16, 16, true, true) ) );
-        menuItemHelp.setAccelerator( new KeyCodeCombination(KeyCode.H, KeyCombination.CONTROL_DOWN) );
-        menuItemHelp.setOnAction(e -> onDisplayHelp());
-        menuHelp.getItems().add(menuItemHelp);
 
         return menuBar;
     }
