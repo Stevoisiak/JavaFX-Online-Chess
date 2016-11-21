@@ -15,8 +15,7 @@ public class Space extends Button
         this.x = x;
         this.y = y;
         this.piece = null;
-        this.setMinHeight(400/8); //stage size/8
-        this.setMinWidth(400/8); //stage size/8
+        this.getStyleClass().add("chess-space");
     }
     
     // returns true if space is occupied

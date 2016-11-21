@@ -1,0 +1,9 @@
+.chess-space{
+	/* stage size (400)/8 spaces */
+	-fx-min-height:  50px;
+	-fx-min-width:   50px;
+	-fx-pref-height: 50px;
+	-fx-pref-width:  50px;
+	-fx-max-height:  50px;
+	-fx-max-width:   50px;
+}

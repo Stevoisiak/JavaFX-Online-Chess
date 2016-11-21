@@ -44,13 +44,16 @@ public class ChessGUI extends Application
         //mainStage.getIcons().add( new Image("assets/icons/app_icon.png") );
 
         BorderPane root = new BorderPane();
-        Scene mainScene = new Scene(root, 400, 425);
+        Scene mainScene = new Scene(root);
         mainStage.setScene(mainScene);
 
         VBox vbox = new VBox();
         vbox.setAlignment( Pos.TOP_CENTER );
         root.setCenter(vbox);
 
+        // add stylesheet
+        mainScene.getStylesheets().add("assets/stylesheet.css");
+        
         // Game logic ---
         
         // prompt user to select team color
