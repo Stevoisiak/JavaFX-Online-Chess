@@ -57,7 +57,7 @@ public class ChessGUI extends Application
         // Game logic ---
         
         // prompt user to select team color
-        boolean playerIsWhite = choosePlayerColor();
+        playerIsWhite = choosePlayerColor();
         
         // draw chessboard
         ChessBoard board = new ChessBoard(playerIsWhite);
@@ -76,7 +76,7 @@ public class ChessGUI extends Application
     public boolean choosePlayerColor()
     {
         // Set to white by default
-        boolean playerIsWhite = true;
+        playerIsWhite = true;
         
         // TODO: If a chess game is currently ongoing, warn that
         //         "Starting a new game while a match is in progress will count as a forfiet."
