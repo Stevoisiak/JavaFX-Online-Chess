@@ -17,50 +17,23 @@ public class ChessBoard extends GridPane
         super();
 
         // initialize 8x8 array of spaces
-        for (int i = 0; i < spaces[0].length; i++)
+        for (int x = 0; x < spaces[0].length; x++)
         { 
-            Integer iVal = new Integer(i); //gets value into EventHandler
-            for (int j = 0; j < spaces[1].length; j++)
+            Integer xVal = new Integer(x); //gets value into EventHandler
+            for (int y = 0; y < spaces[1].length; y++)
             {
-                Integer jVal = new Integer(j); //gets value into EventHandler
-                spaces[i][j] = new Space(i, j);
+                Integer yVal = new Integer(y); //gets value into EventHandler
+                spaces[x][y] = new Space(x, y);
 
                 //if white, add Spaces so ensured bottom left is 0,0
                 //if Black, add Spaces so ensured bottom left is 7,7
-                if (playerIsWhite) { this.add(spaces[i][j], i, 8 - j); }
-                else { this.add(spaces[i][j], 8 - i, j); }
-
-                EventHandler<ActionEvent> spaceClick = new EventHandler<ActionEvent>()
-                    {
-                        public void handle(ActionEvent event)
-                        {
-
-							//if there is active square and it has a piece
-                            if (activeSpace != null && activeSpace.getPiece() != null)
-                            {
-								//move piece from active space to clicked space
-                                spaces[iVal.intValue()][jVal.intValue()].setPiece(
-                                	activeSpace.releasePiece()  );
-
-								//decouples space from space on board
-                                activeSpace = null;
-                            }
-                            else 
-                            {
-								//if there's a piece on the selected square when no active square
-                                if(spaces[iVal.intValue()][jVal.intValue()].getPiece() != null)
-                                {
-									//make active square clicked square
-                                    activeSpace = spaces[iVal.intValue()][jVal.intValue()];
-                                }
-                            }
-                        }
-                    };
-
-                spaces[i][j].setOnAction(spaceClick);
+                if (playerIsWhite) { this.add(spaces[x][y], x, 8 - y); }
+                else { this.add(spaces[x][y], 8 - x, y); }
+                
+                spaces[x][y].setOnAction(e -> onSpaceClick(xVal.intValue(), yVal.intValue()));
 
                 //puts pieces in start positions
-                defineStartPositions(spaces[i][j]);
+                defineStartPositions(spaces[x][y]);
             }
         }
     }
@@ -153,6 +126,29 @@ public class ChessBoard extends GridPane
                     case 7: s.setPiece( new Piece("rook", false) );
                     break;
                 }
+            }
+        }
+    }
+
+    public void onSpaceClick(int x, int y)
+    {
+        //if there is active square and it has a piece
+        if (activeSpace != null && activeSpace.getPiece() != null)
+        {
+            //move piece from active space to clicked space
+            spaces[x][y].setPiece(
+                activeSpace.releasePiece()  );
+
+            //decouples space from space on board
+            activeSpace = null;
+        }
+        else 
+        {
+            //if there's a piece on the selected square when no active square
+            if(spaces[x][y].getPiece() != null)
+            {
+                //make active square clicked square
+                activeSpace = spaces[x][y];
             }
         }
     }
