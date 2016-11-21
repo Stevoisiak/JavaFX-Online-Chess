@@ -36,9 +36,7 @@ public class ChessGUI extends Application
         }
     }
 
-    // Global constants
-    final boolean WHITE = true;
-    final boolean BLACK = false;
+    boolean playerIsWhite;
     
     public void start(Stage mainStage) 
     {
@@ -56,10 +54,10 @@ public class ChessGUI extends Application
         // Game logic ---
         
         // prompt user to select team color
-        boolean playerColor = choosePlayerColor();
+        boolean playerIsWhite = choosePlayerColor();
         
         // draw chessboard
-        ChessBoard board = new ChessBoard(playerColor);
+        ChessBoard board = new ChessBoard(playerIsWhite);
         vbox.getChildren().add(board);
         
         // Add menuBar
@@ -75,7 +73,7 @@ public class ChessGUI extends Application
     public boolean choosePlayerColor()
     {
         // Set to white by default
-        boolean playerColor = WHITE;
+        boolean playerIsWhite = true;
         
         // TODO: If a chess game is currently ongoing, warn that
         //         "Starting a new game while a match is in progress will count as a forfiet."
@@ -98,14 +96,14 @@ public class ChessGUI extends Application
 
         if (result.get() == buttonTypeWhite)
         {
-            playerColor = WHITE;
+            playerIsWhite = true;
         }
         else if (result.get() == buttonTypeBlack)
         {
-            playerColor = BLACK;
+            playerIsWhite = false;
         }
         
-        return playerColor;
+        return playerIsWhite;
     }
 
     // Quits program
