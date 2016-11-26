@@ -1,14 +1,16 @@
 import javafx.event.*;
+import java.util.function.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.image.*;
+import java.util.Optional;
 
 public class ChessBoard extends GridPane
 {
     public Space[][] spaces = new Space[8][8];
     // const
 
-    //
+    //last clicked space
     public Space activeSpace = null;
 
     public ChessBoard(boolean playerIsWhite)
@@ -27,10 +29,31 @@ public class ChessBoard extends GridPane
 
                 //if white, add Spaces so ensured bottom left is 0,0
                 //if Black, add Spaces so ensured bottom left is 7,7
-                if (playerIsWhite) { this.add(spaces[x][y], x, 8 - y); }
-                else { this.add(spaces[x][y], 8 - x, y); }
-                
-                spaces[x][y].setOnAction(e -> onSpaceClick(xVal.intValue(), yVal.intValue()));
+                if (playerIsWhite) { this.add(spaces[x][y], x, 7 - y); }
+                else { this.add(spaces[x][y], 7 - x, y); }
+
+                spaces[x][y].setOnAction((e) -> 
+                    {
+                        //runs things that happen onClick, gets networkable Move
+                        Optional<Package> info = onSpaceClick(xVal.intValue(), yVal.intValue());
+
+                        //if the move gets the all-clear, run networking methods
+                        if (info.isPresent())
+                        {
+                            //lock board
+                            this.setDisable(true); 
+                            
+                            NetworkProtocol.sendMove(info.get());
+                            Package inputMove = NetworkProtocol.recieveMove();
+                            
+                            if (inputMove != null)
+                                this.processOpponentMove(inputMove);
+                            
+                            //unlock board
+                            this.setDisable(false);
+                        }
+                    } 
+                );
 
                 //puts pieces in start positions
                 defineStartPositions(spaces[x][y]);
@@ -130,17 +153,24 @@ public class ChessBoard extends GridPane
         }
     }
 
-    public void onSpaceClick(int x, int y)
+    public Optional<Package> onSpaceClick(int x, int y)
     {
+
         //if there is active square and it has a piece
         if (activeSpace != null && activeSpace.getPiece() != null)
         {
+            Optional<Package> p = 
+                Optional.of(new Package(activeSpace.getX(), activeSpace.getY(), x, y));
+
+            //if (moveAllowedByPiece() && moveAllowedByBoard())
             //move piece from active space to clicked space
             spaces[x][y].setPiece(
                 activeSpace.releasePiece()  );
 
             //decouples space from space on board
             activeSpace = null;
+
+            return p;
         }
         else 
         {
@@ -151,5 +181,14 @@ public class ChessBoard extends GridPane
                 activeSpace = spaces[x][y];
             }
         }
+        return Optional.empty();
+    }
+
+    // Proccesses a move after it has been recieved from an online opposing player
+    public void processOpponentMove(Package p)
+    {
+        //this takes the move from other player and gets info
+        //activeSpace = spaces[p.getXStart()][p.getYStart()];
+        System.out.println(p.getXEnd() +" "+ p.getYEnd());
     }
 }
