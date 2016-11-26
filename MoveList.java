@@ -1,5 +1,5 @@
 
-public enum Move implements java.io.Serializable
+public enum MoveList implements java.io.Serializable
 {
     UP (0,1),
     DOWN(0,-1),
@@ -17,7 +17,7 @@ public enum Move implements java.io.Serializable
 
     public int getY(){return this.y;}
 
-    public boolean isEqual(Move m) {return ( this.x == m.getX() ) && ( this.y == m.getY() ); }
+    public boolean isEqual(MoveList m) {return ( this.x == m.getX() ) && ( this.y == m.getY() ); }
     public boolean isEqual(int xIn, int yIn) {return ( this.x == xIn ) && ( this.y == yIn ); }
     public boolean isEqual(int xStart, int yStart, int xEnd, int yEnd)
     {
@@ -26,7 +26,7 @@ public enum Move implements java.io.Serializable
         return this.isEqual(xIn, yIn);
     }
 
-    private Move(int xIn, int yIn)
+    private MoveList(int xIn, int yIn)
     {
         x = xIn;
         y = yIn;
