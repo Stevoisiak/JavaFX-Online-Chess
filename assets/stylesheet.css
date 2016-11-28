@@ -1,4 +1,4 @@
-.chess-space{
+.chess-space {
 	/* stage size (400)/8 spaces */
 	-fx-min-height:  50px;
 	-fx-min-width:   50px;
@@ -6,4 +6,18 @@
 	-fx-pref-width:  50px;
 	-fx-max-height:  50px;
 	-fx-max-width:   50px;
+}
+
+.chat-box {
+	-fx-padding: 10px;
+	-fx-pref-width: 200px;
+	-fx-max-width: 300px;
+}
+
+.chat-area {
+	-fx-pref-height: 150px;
+}
+
+.chat-field {
+	
 }

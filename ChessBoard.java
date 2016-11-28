@@ -43,8 +43,9 @@ public class ChessBoard extends GridPane
                             //lock board
                             this.setDisable(true); 
                             
-                            NetworkProtocol.sendMove(info.get());
-                            Package inputMove = NetworkProtocol.recieveMove();
+                            //NetworkProtocol.sendMove(info.get());
+                            //Package inputMove = NetworkProtocol.recieveMove();
+                            Package inputMove = null;
                             
                             if (inputMove != null)
                                 this.processOpponentMove(inputMove);
