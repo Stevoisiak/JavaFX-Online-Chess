@@ -172,7 +172,7 @@ public class ChessBoard extends GridPane
             activeSpace = null;
 
             try {
-                ChessGUI.connection.send(p.get());
+                ChessGUI.connection.send(p.get()); // Steven: VERY HACKY! TODO: FIX THIS
             }
             catch (Exception e)
             {

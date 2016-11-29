@@ -41,7 +41,7 @@ public class ChessGUI extends Application
 
     private ChessBoard board;
     private TextArea chatArea; // chat messages
-    static public NetworkConnection connection;
+    static public NetworkConnection connection; // Steven: VERY HACKY! TODO: FIX THIS
     private boolean playerIsWhite; // white player = server
 
     @Override
