@@ -171,6 +171,13 @@ public class ChessBoard extends GridPane
             //decouples space from space on board
             activeSpace = null;
 
+            try {
+                ChessGUI.connection.send(p.get());
+            }
+            catch (Exception e)
+            {
+            }
+            
             return p;
         }
         else 
