@@ -1,4 +1,7 @@
+import Networking.*;
+
 import javafx.application.*;
+import javafx.application.Platform;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.canvas.*;
@@ -36,8 +39,12 @@ public class ChessGUI extends Application
         }
     }
 
-    boolean playerIsWhite;
-    
+    private ChessBoard board;
+    private TextArea chatArea; // chat messages
+    static public NetworkConnection connection;
+    private boolean playerIsWhite; // white player = server
+
+    @Override
     public void start(Stage mainStage) 
     {
         mainStage.setTitle("Chess Game");
@@ -46,28 +53,64 @@ public class ChessGUI extends Application
         BorderPane root = new BorderPane();
         Scene mainScene = new Scene(root);
         mainStage.setScene(mainScene);
-
-        VBox vbox = new VBox();
-        vbox.setAlignment( Pos.TOP_CENTER );
-        root.setCenter(vbox);
-
+        
         // add stylesheet
         mainScene.getStylesheets().add("assets/stylesheet.css");
-        
-        // Game logic ---
         
         // prompt user to select team color
         playerIsWhite = choosePlayerColor();
         
-        // draw chessboard
-        ChessBoard board = new ChessBoard(playerIsWhite);
-        vbox.getChildren().add(board);
+        // create chat box
+        VBox chatBox = generateChatBox();
+        root.setRight(chatBox);
         
-        // Add menuBar
+        // draw chessboard
+        board = new ChessBoard(playerIsWhite);
+        root.setCenter(board); // sized 400x400
+        
+        // Initialize server/client
+        if (playerIsWhite)
+        {
+            connection = createServer();
+            chatArea.appendText("Connecting to client...\n");
+        }
+        else
+        {
+            connection = createClient();
+            chatArea.appendText("Connecting to server...\n");
+        }
+        
+        try
+        {
+            connection.startConnection();
+        }
+        catch ( Exception e )
+        {
+            System.err.println("Error: Failed to start connection");
+            System.exit(1);
+        }
+        
+        // add menuBar
         MenuBar menuBar = generateMenuBar();
         root.setTop(menuBar);
 
         mainStage.show();
+    }
+    
+    // Attempt to close socket on program termination
+    // TODO: Check if connection has been created/established
+    //       before attmepting to close
+    @Override
+    public void stop() {
+        try {
+            connection.closeConnection();
+        }
+        catch (NullPointerException e) {
+            // Nothing to close. Connention never initialized and/or established
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
     // Prompts the player to choose team color
@@ -109,6 +152,27 @@ public class ChessGUI extends Application
         return playerIsWhite;
     }
 
+    private Server createServer() {
+        return new Server(444, data -> {
+            // Run later to give JavaFX time to draw GUI
+            Platform.runLater(() -> {
+                // TODO: send data to GameBoard() to process received piece movement
+                chatArea.appendText(data.toString() + "\n");
+            });
+        });
+    }
+    
+    private Client createClient() {
+        // localhost IP address
+        return new Client("127.0.0.1", 444, data -> {
+            // Run later to give JavaFX time to draw GUI
+            Platform.runLater(() -> {
+                // TODO: send data to GameBoard() to process received piece movement
+                chatArea.appendText(data.toString() + "\n");
+            });
+        });
+    }
+    
     // Quits program
     public void onQuit()
     {
@@ -130,13 +194,47 @@ public class ChessGUI extends Application
         // the graphic replaces the standard icon on the left
         //infoAlert.setGraphic( new ImageView( new Image("assets/icons/cat.png", 64, 64, true, true) ) );
 
-        infoAlert.setContentText("Programmed by Maxwell Sirotin and Steven Vascellaro.\n" +
-            "Chess Icons by \"Colin M.L. Burnett\".");
+        infoAlert.setContentText("Programmed by Maxwell Sirotin and Steven Vascellaro.\n\n" +
+            "Chess icons by \"Colin M.L. Burnett\".\n\n" + 
+            "Networking package & chat client based on \n\"JavaFX Software: Chat (Server-Client)\" \nby Almas Baimagambetov." );
         infoAlert.showAndWait();
     }
     
+    // Generate chat window
+    private VBox generateChatBox()
+    {  
+        // sends messages
+        TextField chatField = new TextField();
+        chatField.getStyleClass().add("chat-field");
+        chatField.setOnAction(event -> {
+            // Specify if message is from server or client
+            String message = playerIsWhite ? "Server: " : "Client: ";
+            
+            message += chatField.getText();
+            chatField.clear();
+            chatArea.appendText(message + "\n");
+            
+            try {
+                connection.send(message);
+            }
+            catch (Exception e) {
+                chatArea.appendText("Failed to send\n");
+            }
+        });
+        
+        // displays messages
+        chatArea = new TextArea();
+        chatArea.setEditable(false);
+        chatArea.getStyleClass().add("chat-area");
+        
+        VBox chatBox = new VBox(20, chatArea, chatField);
+        chatBox.getStyleClass().add("chat-box");
+        
+        return chatBox;
+    }
+    
     // Generate main menu bar
-    public MenuBar generateMenuBar()
+    private MenuBar generateMenuBar()
     {
         MenuBar menuBar = new MenuBar();
         

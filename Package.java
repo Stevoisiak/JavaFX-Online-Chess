@@ -23,6 +23,11 @@ public class Package implements Serializable
        yEnd = y2;
    }
    
+   public String toString()
+   {
+       return ("Move: " + xStart + " " + xEnd + " to " + yStart + " " + yEnd); 
+   }
+   
    public int getXStart(){return xStart;}
    public int getXEnd(){return xEnd;}
    public int getYStart(){return yStart;}
