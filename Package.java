@@ -25,7 +25,7 @@ public class Package implements Serializable
    
    public String toString()
    {
-       return ("Move: " + xStart + " " + xEnd + " to " + yStart + " " + yEnd); 
+       return ("Move: " + xStart + " " + yStart + " to " + xEnd + " " + yEnd); 
    }
    
    public int getXStart(){return xStart;}
