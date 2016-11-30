@@ -35,7 +35,7 @@ public class ChessBoard extends GridPane
                 spaces[x][y].setOnAction((e) -> 
                     {
                         //runs things that happen onClick, gets networkable Move
-                        Optional<Package> info = onSpaceClick(xVal.intValue(), yVal.intValue());
+                        Optional<MoveInfo> info = onSpaceClick(xVal.intValue(), yVal.intValue());
 
                         //if the move gets the all-clear, run networking methods
                         if (info.isPresent())
@@ -44,8 +44,8 @@ public class ChessBoard extends GridPane
                             this.setDisable(true); 
                             
                             //NetworkProtocol.sendMove(info.get());
-                            //Package inputMove = NetworkProtocol.recieveMove();
-                            Package inputMove = null;
+                            //MoveInfo inputMove = NetworkProtocol.recieveMove();
+                            MoveInfo inputMove = null;
                             
                             if (inputMove != null)
                                 this.processOpponentMove(inputMove);
@@ -154,14 +154,14 @@ public class ChessBoard extends GridPane
         }
     }
 
-    public Optional<Package> onSpaceClick(int x, int y)
+    public Optional<MoveInfo> onSpaceClick(int x, int y)
     {
 
         //if there is active square and it has a piece
         if (activeSpace != null && activeSpace.getPiece() != null)
         {
-            Optional<Package> p = 
-                Optional.of(new Package(activeSpace.getX(), activeSpace.getY(), x, y));
+            Optional<MoveInfo> p = 
+                Optional.of(new MoveInfo(activeSpace.getX(), activeSpace.getY(), x, y));
 
             //if (moveAllowedByPiece() && moveAllowedByBoard())
             //move piece from active space to clicked space
@@ -193,7 +193,7 @@ public class ChessBoard extends GridPane
     }
 
     // Proccesses a move after it has been recieved from an online opposing player
-    public void processOpponentMove(Package p)
+    public void processOpponentMove(MoveInfo p)
     {
         //this takes the move from other player and gets info
         //activeSpace = spaces[p.getXStart()][p.getYStart()];
