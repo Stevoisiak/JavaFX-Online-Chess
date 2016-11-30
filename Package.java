@@ -2,41 +2,41 @@ import java.io.Serializable;
 
 public class Package implements Serializable
 {
-   int xStart;
-   int xEnd;
-   int yStart;
-   int yEnd;
+   int oldX;
+   int newX;
+   int oldY;
+   int newY;
     
    public Package()
    {
-       xStart = 0;
-       xEnd = 1;
-       yStart = 0;
-       yEnd = 1;
+       oldX = 0;
+       oldY = 0;
+       newX = 1;
+       newY = 1;
    }
    
-   public Package(int x1, int y1, int x2, int y2)
+   public Package(int oldX, int oldY, int newX, int newY)
    {
-       xStart = x1;
-       xEnd = x2;
-       yStart = y1;
-       yEnd = y2;
+       this.oldX = oldX;
+       this.oldY = oldY;
+       this.newX = newX;
+       this.newY = newY;
    }
    
    public String toString()
    {
-       return ("Move: " + getCharLabel(xStart+1) + (yStart+1) + " to " + getCharLabel(xEnd+1) + (yEnd+1)); 
+       return ("Move: " + getCharLabel(oldX+1) + (oldY+1) + " to " + getCharLabel(newX+1) + (newY+1)); 
    }
    
-   public int getXStart(){return xStart;}
-   public int getXEnd(){return xEnd;}
-   public int getYStart(){return yStart;}
-   public int getYEnd(){return yEnd;}
+   public int getOldX(){return this.oldX;}
+   public int getOldY(){return this.oldY;}
+   public int getNewX(){return this.newX;}
+   public int getNewY(){return this.newY;}
    
-   public void setXStart(int x){xStart = x;}
-   public void setXEnd(int x){xEnd = x;}
-   public void setYStart(int y){yStart = y;}
-   public void setYEnd(int y){yEnd = y;}
+   public void setOldX(int oldX){this.oldX = oldX;}
+   public void setOldY(int oldY){this.oldY = oldY;}
+   public void setNewX(int newX){this.newX = newX;}
+   public void setNewY(int newX){this.newY = newX;}
    
    // Converts x number poisition to character label
    private String getCharLabel(int i)
