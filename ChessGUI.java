@@ -53,21 +53,21 @@ public class ChessGUI extends Application
         BorderPane root = new BorderPane();
         Scene mainScene = new Scene(root);
         mainStage.setScene(mainScene);
-        
+
         // add stylesheet
         mainScene.getStylesheets().add("assets/stylesheet.css");
-        
+
         // prompt user to select team color
         playerIsWhite = choosePlayerColor();
-        
+
         // create chat box
         VBox chatBox = generateChatBox();
         root.setRight(chatBox);
-        
+
         // draw chessboard
         board = new ChessBoard(playerIsWhite);
         root.setCenter(board); // sized 400x400
-        
+
         // Initialize server/client
         if (playerIsWhite)
         {
@@ -79,7 +79,7 @@ public class ChessGUI extends Application
             connection = createClient();
             chatArea.appendText("Connecting to server...\n");
         }
-        
+
         try
         {
             connection.startConnection();
@@ -89,14 +89,14 @@ public class ChessGUI extends Application
             System.err.println("Error: Failed to start connection");
             System.exit(1);
         }
-        
+
         // add menuBar
         MenuBar menuBar = generateMenuBar();
         root.setTop(menuBar);
 
         mainStage.show();
     }
-    
+
     // Attempt to close socket on program termination
     // TODO: Check if connection has been created/established
     //       before attmepting to close
@@ -112,7 +112,7 @@ public class ChessGUI extends Application
             e.printStackTrace();
         }
     }
-    
+
     // Prompts the player to choose team color
     // TODO: Change return type to enum so we can return NULL
     //       if user exits without selecting a color;
@@ -120,7 +120,7 @@ public class ChessGUI extends Application
     {
         // Set to white by default
         playerIsWhite = true;
-        
+
         // TODO: If a chess game is currently ongoing, warn that
         //         "Starting a new game while a match is in progress will count as a forfiet."
         //         "Do you still want to start a new game?"
@@ -148,7 +148,7 @@ public class ChessGUI extends Application
         {
             playerIsWhite = false;
         }
-        
+
         return playerIsWhite;
     }
 
@@ -171,7 +171,7 @@ public class ChessGUI extends Application
             });
         });
     }
-    
+
     // Initialize Client
     private Client createClient() {
         // localhost IP address
@@ -192,7 +192,7 @@ public class ChessGUI extends Application
             });
         });
     }
-   
+
     // Quits program
     public void onQuit()
     {
@@ -219,7 +219,7 @@ public class ChessGUI extends Application
             "Networking package & chat client based on \n\"JavaFX Software: Chat (Server-Client)\" \nby Almas Baimagambetov." );
         infoAlert.showAndWait();
     }
-    
+
     // Generate chat window
     private VBox generateChatBox()
     {  
@@ -229,11 +229,11 @@ public class ChessGUI extends Application
         chatField.setOnAction(event -> {
             // Specify if message is from server or client
             String message = playerIsWhite ? "Server: " : "Client: ";
-            
+
             message += chatField.getText();
             chatField.clear();
             chatArea.appendText(message + "\n");
-            
+
             try {
                 connection.send(message);
             }
@@ -241,23 +241,23 @@ public class ChessGUI extends Application
                 chatArea.appendText("Failed to send\n");
             }
         });
-        
+
         // displays messages
         chatArea = new TextArea();
         chatArea.setEditable(false);
         chatArea.getStyleClass().add("chat-area");
-        
+
         VBox chatBox = new VBox(20, chatArea, chatField);
         chatBox.getStyleClass().add("chat-box");
-        
+
         return chatBox;
     }
-    
+
     // Generate main menu bar
     private MenuBar generateMenuBar()
     {
         MenuBar menuBar = new MenuBar();
-        
+
         Menu gameMenu = new Menu("Game");
         menuBar.getMenus().add(gameMenu);
 
