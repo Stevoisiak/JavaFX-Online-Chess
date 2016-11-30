@@ -152,27 +152,47 @@ public class ChessGUI extends Application
         return playerIsWhite;
     }
 
+    // Initialize Server
     private Server createServer() {
         return new Server(444, data -> {
-            // Run later to give JavaFX time to draw GUI
+            // Below: Runs whenever data is revieved from the client.
+            //        runLater() gives JavaFX time to draw GUI.
             Platform.runLater(() -> {
-                // TODO: send data to GameBoard() to process received piece movement
-                chatArea.appendText(data.toString() + "\n");
+                if (data instanceof MoveInfo)
+                {
+                    MoveInfo move = (MoveInfo)data;
+                    board.processOpponentMove(move);
+                }
+                else // if (data instanceof String)
+                {
+                    // Display in chat message box
+                    chatArea.appendText(data.toString() + "\n");
+                }
             });
         });
     }
     
+    // Initialize Client
     private Client createClient() {
         // localhost IP address
         return new Client("127.0.0.1", 444, data -> {
-            // Run later to give JavaFX time to draw GUI
+            // Below: Runs whenever data is revieved from the server.
+            //        runLater() gives JavaFX time to draw GUI.
             Platform.runLater(() -> {
-                // TODO: send data to GameBoard() to process received piece movement
-                chatArea.appendText(data.toString() + "\n");
+                if (data instanceof MoveInfo)
+                {
+                    MoveInfo move = (MoveInfo)data;
+                    board.processOpponentMove(move);
+                }
+                else // if (data instanceof String)
+                {
+                    // Display in chat message box
+                    chatArea.appendText(data.toString() + "\n");
+                }
             });
         });
     }
-    
+   
     // Quits program
     public void onQuit()
     {
