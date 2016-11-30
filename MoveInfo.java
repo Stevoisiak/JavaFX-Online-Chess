@@ -25,7 +25,7 @@ public class MoveInfo implements Serializable
    
    public String toString()
    {
-       return ("Move: " + getCharLabel(oldX+1) + (oldY+1) + " to " + getCharLabel(newX+1) + (newY+1)); 
+       return (getCharLabel(oldX+1) + (oldY+1) + " to " + getCharLabel(newX+1) + (newY+1)); 
    }
    
    public int getOldX(){return this.oldX;}
