@@ -197,6 +197,6 @@ public class ChessBoard extends GridPane
     {
         //this takes the move from other player and gets info
         //activeSpace = spaces[p.getXStart()][p.getYStart()];
-        System.out.println(p.getXEnd() +" "+ p.getYEnd());
+        System.out.println(p.getNewX() +" "+ p.getNewY());
     }
 }
