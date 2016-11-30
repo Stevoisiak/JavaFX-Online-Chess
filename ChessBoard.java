@@ -3,7 +3,6 @@ import java.util.function.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.image.*;
-import java.util.Optional;
 
 public class ChessBoard extends GridPane
 {
@@ -35,10 +34,10 @@ public class ChessBoard extends GridPane
                 spaces[x][y].setOnAction((e) -> 
                     {
                         //runs things that happen onClick, gets networkable Move
-                        Optional<Package> info = onSpaceClick(xVal.intValue(), yVal.intValue());
+                        Package info = onSpaceClick(xVal.intValue(), yVal.intValue());
 
                         //if the move gets the all-clear, run networking methods
-                        if (info.isPresent())
+                        if (info != null)
                         {
                             //lock board
                             this.setDisable(true); 
@@ -154,14 +153,13 @@ public class ChessBoard extends GridPane
         }
     }
 
-    public Optional<Package> onSpaceClick(int x, int y)
+    public Package onSpaceClick(int x, int y)
     {
 
         //if there is active square and it has a piece
         if (activeSpace != null && activeSpace.getPiece() != null)
         {
-            Optional<Package> p = 
-                Optional.of(new Package(activeSpace.getX(), activeSpace.getY(), x, y));
+            Package move = new Package(activeSpace.getX(), activeSpace.getY(), x, y);
 
             //if (moveAllowedByPiece() && moveAllowedByBoard())
             //move piece from active space to clicked space
@@ -172,13 +170,13 @@ public class ChessBoard extends GridPane
             activeSpace = null;
 
             try {
-                ChessGUI.connection.send(p.get()); // Steven: VERY HACKY! TODO: FIX THIS
+                ChessGUI.connection.send(move); // Steven: VERY HACKY! TODO: FIX THIS
             }
             catch (Exception e)
             {
             }
             
-            return p;
+            return move;
         }
         else 
         {
@@ -189,7 +187,7 @@ public class ChessBoard extends GridPane
                 activeSpace = spaces[x][y];
             }
         }
-        return Optional.empty();
+        return null;
     }
 
     // Proccesses a move after it has been recieved from an online opposing player
