@@ -1,13 +1,13 @@
 import java.io.Serializable;
 
-public class Package implements Serializable
+public class MoveInfo implements Serializable
 {
    int oldX;
    int newX;
    int oldY;
    int newY;
     
-   public Package()
+   public MoveInfo()
    {
        oldX = 0;
        oldY = 0;
@@ -15,7 +15,7 @@ public class Package implements Serializable
        newY = 1;
    }
    
-   public Package(int oldX, int oldY, int newX, int newY)
+   public MoveInfo(int oldX, int oldY, int newX, int newY)
    {
        this.oldX = oldX;
        this.oldY = oldY;
