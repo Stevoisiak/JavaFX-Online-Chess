@@ -160,8 +160,7 @@ public class ChessGUI extends Application
             Platform.runLater(() -> {
                 if (data instanceof MoveInfo)
                 {
-                    MoveInfo move = (MoveInfo)data;
-                    board.processOpponentMove(move);
+                    board.processOpponentMove((MoveInfo) data);
                 }
                 else // if (data instanceof String)
                 {
@@ -181,8 +180,7 @@ public class ChessGUI extends Application
             Platform.runLater(() -> {
                 if (data instanceof MoveInfo)
                 {
-                    MoveInfo move = (MoveInfo)data;
-                    board.processOpponentMove(move);
+                    board.processOpponentMove((MoveInfo) data);
                 }
                 else // if (data instanceof String)
                 {
