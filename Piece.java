@@ -21,8 +21,10 @@ public class Piece
         
         //since image can be inferred from name, probably won't be needed once have Piece subclasses
         String location = "assets/pieces/";
-        if (this.isWhite()) {  location = location + "white_";  }
-        else { location = location + "black_"; }
+        if (this.isWhite())
+            location = location + "white_";
+        else
+            location = location + "black_";
         this.sprite = new Image(location + name + ".png");
     }
     

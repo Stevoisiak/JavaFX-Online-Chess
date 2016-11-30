@@ -8,7 +8,7 @@ public class Space extends Button
     int x;
     int y;
     Piece piece; // piece currently on space
-    
+
     public Space(int x, int y)
     {
         super();
@@ -17,7 +17,7 @@ public class Space extends Button
         this.piece = null;
         this.getStyleClass().add("chess-space");
     }
-    
+
     // returns true if space is occupied
     public boolean isOccupied()
     {
@@ -26,32 +26,31 @@ public class Space extends Button
         else
             return false;
     }
-    
+
     // removes piece from space
     public Piece releasePiece()
     {
         Piece tmpPiece = this.piece;
         this.piece = null;
-		this.setGraphic(new ImageView());
+        this.setGraphic(new ImageView());
         return tmpPiece;
     }
-    
+
     public Piece getPiece()
     {
         return this.piece;
     }
-    
+
     // Sets the piece (TODO: Capture piece), draws image of piece on space
     public void setPiece(Piece piece)
     {
         this.piece = piece;
         this.setGraphic( new ImageView ( piece.getSprite() ) );
     }
-    
+
     public void setX(int xIn) {this.x = xIn;}
     public int getX() {return this.x;}
-    
+
     public void setY(int yIn) {this.y = yIn;}
     public int getY() {return this.y;}
-    
 }

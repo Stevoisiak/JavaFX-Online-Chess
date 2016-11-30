@@ -12,36 +12,36 @@ import java.util.function.Consumer;
 public abstract class NetworkConnection
 {
     private ConnectionThread connThread = new ConnectionThread();
-    
+
     // Called when recieving an object
     private Consumer<Serializable> onRecieveCallback;
-    
+
     public NetworkConnection(Consumer<Serializable> onRecieveCallback) {
         this.onRecieveCallback = onRecieveCallback;
-        
+
         // Allow main program to exit even if connection thread is still running
         connThread.setDaemon(true);
     }
-    
+
     // Initialize connection
     public void startConnection() throws Exception {
         connThread.start();
     }
-    
+
     // Send data
     public void send(Serializable data) throws Exception {
         connThread.out.writeObject(data);
     }
-    
+
     // Close connection
     public void closeConnection() throws Exception {
         connThread.socket.close();
     }
-    
+
     protected abstract boolean isServer();
     protected abstract String getIP();
     protected abstract int getPort();
-    
+
     // Thread is created on startConnection()
     private class ConnectionThread extends Thread {
         private Socket socket;
@@ -63,10 +63,10 @@ public abstract class NetworkConnection
                 onRecieveCallback.accept("Connection Established");
                 this.socket = socket;
                 this.out = out;
-                
+
                 // Disable message buffering
                 socket.setTcpNoDelay(true);
-                
+
                 while (true) {
                     Serializable data = (Serializable) in.readObject();
                     onRecieveCallback.accept(data);

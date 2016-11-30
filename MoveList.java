@@ -10,11 +10,9 @@ public enum MoveList implements java.io.Serializable
     private int y;
 
     private void setX(int x){this.x = x;}
-
     public int getX(){return this.x;}
 
     private void setY(int y){this.y = y;}
-
     public int getY(){return this.y;}
 
     public boolean isEqual(MoveList m) {return ( this.x == m.getX() ) && ( this.y == m.getY() ); }

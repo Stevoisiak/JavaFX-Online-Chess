@@ -42,14 +42,14 @@ public class ChessBoard extends GridPane
                         {
                             //lock board
                             this.setDisable(true); 
-                            
+
                             //NetworkProtocol.sendMove(info.get());
                             //MoveInfo inputMove = NetworkProtocol.recieveMove();
                             MoveInfo inputMove = null;
-                            
+
                             if (inputMove != null)
                                 this.processOpponentMove(inputMove);
-                            
+
                             //unlock board
                             this.setDisable(false);
                         }
@@ -177,7 +177,7 @@ public class ChessBoard extends GridPane
             catch (Exception e)
             {
             }
-            
+
             return p;
         }
         else 
