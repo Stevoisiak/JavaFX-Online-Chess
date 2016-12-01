@@ -32,29 +32,8 @@ public class ChessBoard extends GridPane
                 if (playerIsWhite) { this.add(spaces[x][y], x, 7 - y); }
                 else { this.add(spaces[x][y], 7 - x, y); }
 
-                spaces[x][y].setOnAction((e) -> 
-                    {
-                        //runs things that happen onClick, gets networkable Move
-                        Optional<MoveInfo> info = onSpaceClick(xVal.intValue(), yVal.intValue());
-
-                        //if the move gets the all-clear, run networking methods
-                        if (info.isPresent())
-                        {
-                            //lock board
-                            this.setDisable(true); 
-
-                            //NetworkProtocol.sendMove(info.get());
-                            //MoveInfo inputMove = NetworkProtocol.recieveMove();
-                            MoveInfo inputMove = null;
-
-                            if (inputMove != null)
-                                this.processOpponentMove(inputMove);
-
-                            //unlock board
-                            this.setDisable(false);
-                        }
-                    } 
-                );
+                //runs things that happen when a space is clicked
+                spaces[x][y].setOnAction( e -> onSpaceClick(xVal.intValue(), yVal.intValue()) );
 
                 //puts pieces in start positions
                 defineStartPositions(spaces[x][y]);
@@ -154,49 +133,65 @@ public class ChessBoard extends GridPane
         }
     }
 
-    public Optional<MoveInfo> onSpaceClick(int x, int y)
+    public void onSpaceClick(int x, int y)
     {
-
         //if there is active square and it has a piece
         if (activeSpace != null && activeSpace.getPiece() != null)
         {
             Optional<MoveInfo> p = 
                 Optional.of(new MoveInfo(activeSpace.getX(), activeSpace.getY(), x, y));
 
-            //if (moveAllowedByPiece() && moveAllowedByBoard())
             //move piece from active space to clicked space
-            spaces[x][y].setPiece(
-                activeSpace.releasePiece()  );
+            boolean validMove = processMove(p.get());
+
+            if (validMove)
+            {
+                try {
+                    ChessGUI.connection.send(p.get()); // Steven: VERY HACKY! TODO: FIX THIS
+                    // lock board
+                    this.setDisable(true);
+                }
+                catch (Exception e)
+                {
+                    System.err.println("Error: Failed to send move");
+                }
+            }
 
             //decouples space from space on board
             activeSpace = null;
-
-            try {
-                ChessGUI.connection.send(p.get()); // Steven: VERY HACKY! TODO: FIX THIS
-            }
-            catch (Exception e)
-            {
-            }
-
-            return p;
         }
         else 
         {
             //if there's a piece on the selected square when no active square
-            if(spaces[x][y].getPiece() != null)
+            if (spaces[x][y].getPiece() != null)
             {
                 //make active square clicked square
                 activeSpace = spaces[x][y];
             }
         }
-        return Optional.empty();
     }
 
-    // Proccesses a move after it has been recieved from an online opposing player
+    // Proccesses a move after it has been made by a player
+    protected boolean processMove(MoveInfo p)
+    {
+        // if (moveAllowedByPiece() && moveAllowedByBoard())
+            Space oldSpace = spaces[p.getOldX()][p.getOldY()];
+            Space newSpace = spaces[p.getNewX()][p.getNewY()];
+            newSpace.setPiece( oldSpace.releasePiece() );
+            return true;
+        // else
+            // invalid move
+            // return false
+    }
+    
+    // Proccesses an opponent's move
     public void processOpponentMove(MoveInfo p)
     {
-        //this takes the move from other player and gets info
-        //activeSpace = spaces[p.getXStart()][p.getYStart()];
-        System.out.println(p.getNewX() +" "+ p.getNewY());
-    }
+        boolean validMove = processMove(p);
+        if (validMove)
+        {
+            // unlock board
+            this.setDisable(false);
+        }
+   }
 }
