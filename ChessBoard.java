@@ -174,14 +174,18 @@ public class ChessBoard extends GridPane
     // Proccesses a move after it has been made by a player
     protected boolean processMove(MoveInfo p)
     {
-        // if (moveAllowedByPiece() && moveAllowedByBoard())
-            Space oldSpace = spaces[p.getOldX()][p.getOldY()];
-            Space newSpace = spaces[p.getNewX()][p.getNewY()];
+        Space oldSpace = spaces[p.getOldX()][p.getOldY()];
+        Space newSpace = spaces[p.getNewX()][p.getNewY()];
+        
+        if (moveIsValid(p))
+        {
             newSpace.setPiece( oldSpace.releasePiece() );
             return true;
-        // else
-            // invalid move
-            // return false
+        }
+        else // invalid move
+        {
+            return false;
+        }
     }
     
     // Proccesses an opponent's move
@@ -193,5 +197,20 @@ public class ChessBoard extends GridPane
             // unlock board
             this.setDisable(false);
         }
-   }
+    }
+
+    public boolean moveIsValid(MoveInfo p)
+    {
+        Space oldSpace = spaces[p.getOldX()][p.getOldY()];
+        Space newSpace = spaces[p.getNewX()][p.getNewY()];
+        
+        // Moving to same space
+        if (oldSpace == newSpace)
+            return false;
+        // TODO: Space is occupied by friendly piece
+        // TODO: Move is part of piece's valid moves
+        // TODO: Does not put player's own king into check
+        
+        return true;
+    }
 }
