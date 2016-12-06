@@ -208,6 +208,9 @@ public class ChessBoard extends GridPane
 
     public boolean moveIsValid(MoveInfo p)
     {
+        if (p == null)
+            return false;
+
         Space oldSpace = spaces[p.getOldX()][p.getOldY()];
         Space newSpace = spaces[p.getNewX()][p.getNewY()];
         
