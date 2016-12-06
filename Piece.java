@@ -21,11 +21,8 @@ public class Piece
         
         //since image can be inferred from name, probably won't be needed once have Piece subclasses
         String location = "assets/pieces/";
-        if (this.isWhite())
-            location += "white_";
-        else
-            location += "black_";
-        this.sprite = new Image(location + name + ".png");
+        String filename = this.getColor() + "_" + this.getName() + ".png";
+        this.sprite = new Image(location + filename);
     }
     
     public String getName()
@@ -38,9 +35,18 @@ public class Piece
         return this.sprite;
     }
     
+    // Get piece color as string
+    public String getColor()
+    {
+        if (this.color == true)
+            return "white";
+        else
+            return "black";
+    }
+    
     // returns true if color is white
     public boolean isWhite()
     {
-        return color;
+        return this.color;
     }
 }
