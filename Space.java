@@ -45,7 +45,7 @@ public class Space extends Button
     public void setPiece(Piece piece)
     {
         this.piece = piece;
-        this.setGraphic( new ImageView ( piece.getSprite() ) );
+        this.setGraphic( new ImageView ( piece.getImage() ) );
     }
 
     public void setX(int xIn) {this.x = xIn;}

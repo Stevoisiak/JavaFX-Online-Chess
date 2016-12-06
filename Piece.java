@@ -8,7 +8,7 @@ public class Piece
     final boolean BLACK = false;
     
     protected String name;
-    protected Image sprite;
+    protected Image image;
     protected boolean color;
     protected boolean singleMove;
     
@@ -21,11 +21,8 @@ public class Piece
         
         //since image can be inferred from name, probably won't be needed once have Piece subclasses
         String location = "assets/pieces/";
-        if (this.isWhite())
-            location += "white_";
-        else
-            location += "black_";
-        this.sprite = new Image(location + name + ".png");
+        String filename = this.getColor() + "_" + this.getName() + ".png";
+        this.image = new Image(location + filename);
     }
     
     public String getName()
@@ -33,14 +30,29 @@ public class Piece
         return this.name;
     }
     
-    public Image getSprite()
+    // Returns image of chess piece
+    public Image getImage()
     {
-        return this.sprite;
+        return this.image;
+    }
+    
+    // Get piece color as string
+    public String getColor()
+    {
+        if (this.color == true)
+            return "white";
+        else
+            return "black";
     }
     
     // returns true if color is white
     public boolean isWhite()
     {
-        return color;
+        return this.color;
+    }
+    
+    public String toString()
+    {
+        return (this.getName() + " " + this.getColor());
     }
 }
