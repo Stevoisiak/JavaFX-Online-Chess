@@ -8,6 +8,10 @@
 	-fx-max-width:   50px;
 }
 
+.chess-space-active {
+	-fx-background-color:   red;
+}
+
 .chat-box {
 	-fx-padding: 10px;
 	-fx-pref-width: 200px;

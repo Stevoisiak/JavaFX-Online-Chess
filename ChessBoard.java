@@ -50,12 +50,20 @@ public class ChessBoard extends GridPane
     //Use this to get a space, using GridPane methods will (I think) cause color problems
     public void setActiveSpace(Space s)
     {
-        activeSpace = s;
+        // Remove style from old active space
+		if (this.activeSpace != null) 
+            this.activeSpace.getStyleClass().removeAll("chess-space-active");
+            
+        this.activeSpace = s;
+        
+		// Add style to new active space
+        if (this.activeSpace != null) 
+            this.activeSpace.getStyleClass().add("chess-space-active");
     }
 
     public Space getActiveSpace()
     {
-        return activeSpace;
+        return this.activeSpace;
     }
 
     // prints location of all pieces on the board
@@ -158,7 +166,7 @@ public class ChessBoard extends GridPane
             }
 
             //decouples space from space on board
-            activeSpace = null;
+            setActiveSpace(null);
         }
         else 
         {
@@ -166,7 +174,7 @@ public class ChessBoard extends GridPane
             if (spaces[x][y].getPiece() != null)
             {
                 //make active square clicked square
-                activeSpace = spaces[x][y];
+                setActiveSpace(spaces[x][y]);
             }
         }
     }
