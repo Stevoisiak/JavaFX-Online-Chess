@@ -8,7 +8,7 @@ public class Piece
     final boolean BLACK = false;
     
     protected String name;
-    protected Image sprite;
+    protected Image image;
     protected boolean color;
     protected boolean singleMove;
     
@@ -22,7 +22,7 @@ public class Piece
         //since image can be inferred from name, probably won't be needed once have Piece subclasses
         String location = "assets/pieces/";
         String filename = this.getColor() + "_" + this.getName() + ".png";
-        this.sprite = new Image(location + filename);
+        this.image = new Image(location + filename);
     }
     
     public String getName()
@@ -30,9 +30,10 @@ public class Piece
         return this.name;
     }
     
-    public Image getSprite()
+    // Returns image of chess piece
+    public Image getImage()
     {
-        return this.sprite;
+        return this.image;
     }
     
     // Get piece color as string
