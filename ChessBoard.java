@@ -145,22 +145,21 @@ public class ChessBoard extends GridPane
     {
         // if piece is selected (active square has a piece)
         if (activeSpace != null && activeSpace.getPiece() != null)
-        {
-            MoveInfo p = new MoveInfo(activeSpace.getX(), activeSpace.getY(), x, y);
-
-            //move piece from active space to clicked space
-            boolean validMove = processMove(p);
-
-            if (validMove)
-            {
-                try {
-                    ChessGUI.connection.send(p); // Steven: VERY HACKY! TODO: FIX THIS
+        {            
+            MoveInfo p;
+            boolean boardUpdated = false;
+            boolean moveSent = false;
+            
+            p = new MoveInfo(activeSpace.getX(), activeSpace.getY(), x, y);
+            
+            // update gameboard
+            boardUpdated = this.processMove(p);
+            if (boardUpdated) {
+                // send move to other player
+                moveSent = this.sendMove(p);
+                if (moveSent) {
                     // lock board
                     this.setDisable(true);
-                }
-                catch (Exception e)
-                {
-                    System.err.println("Error: Failed to send move");
                 }
             }
 
@@ -178,7 +177,20 @@ public class ChessBoard extends GridPane
         }
     }
 
-    // Proccesses a move after it has been made by a player
+    // Send move via Internet to other player
+    public boolean sendMove(MoveInfo p)
+    {
+         try {
+             ChessGUI.connection.send(p); // Steven: VERY HACKY! TODO: FIX THIS
+         }
+         catch (Exception e) {
+             System.err.println("Error: Failed to send move");
+             return false;
+         }
+         
+         return true;
+    }
+    
     // Proccess a move after it has been made by a player
     protected boolean processMove(MoveInfo p)
     {
