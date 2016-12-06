@@ -146,16 +146,15 @@ public class ChessBoard extends GridPane
         //if there is active square and it has a piece
         if (activeSpace != null && activeSpace.getPiece() != null)
         {
-            Optional<MoveInfo> p = 
-                Optional.of(new MoveInfo(activeSpace.getX(), activeSpace.getY(), x, y));
+            MoveInfo p = new MoveInfo(activeSpace.getX(), activeSpace.getY(), x, y);
 
             //move piece from active space to clicked space
-            boolean validMove = processMove(p.get());
+            boolean validMove = processMove(p);
 
             if (validMove)
             {
                 try {
-                    ChessGUI.connection.send(p.get()); // Steven: VERY HACKY! TODO: FIX THIS
+                    ChessGUI.connection.send(p); // Steven: VERY HACKY! TODO: FIX THIS
                     // lock board
                     this.setDisable(true);
                 }
