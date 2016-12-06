@@ -179,6 +179,7 @@ public class ChessBoard extends GridPane
     }
 
     // Proccesses a move after it has been made by a player
+    // Proccess a move after it has been made by a player
     protected boolean processMove(MoveInfo p)
     {
         if (moveIsValid(p))
@@ -195,7 +196,7 @@ public class ChessBoard extends GridPane
         }
     }
     
-    // Proccesses an opponent's move
+    // Proccess an opponent's move
     public void processOpponentMove(MoveInfo p)
     {
         boolean validMove = processMove(p);
