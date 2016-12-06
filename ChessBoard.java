@@ -143,7 +143,7 @@ public class ChessBoard extends GridPane
 
     public void onSpaceClick(int x, int y)
     {
-        //if there is active square and it has a piece
+        // if piece is selected (active square has a piece)
         if (activeSpace != null && activeSpace.getPiece() != null)
         {
             MoveInfo p = new MoveInfo(activeSpace.getX(), activeSpace.getY(), x, y);
