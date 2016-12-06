@@ -50,4 +50,9 @@ public class Piece
     {
         return this.color;
     }
+    
+    public String toString()
+    {
+        return (this.getName() + " " + this.getColor());
+    }
 }
