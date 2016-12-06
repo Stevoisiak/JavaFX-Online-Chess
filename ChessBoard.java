@@ -165,7 +165,7 @@ public class ChessBoard extends GridPane
             }
 
             //decouples space from space on board
-            setActiveSpace(null);
+            this.setActiveSpace(null);
         }
         else 
         {
@@ -173,7 +173,7 @@ public class ChessBoard extends GridPane
             if (spaces[x][y].getPiece() != null)
             {
                 //make active square clicked square
-                setActiveSpace(spaces[x][y]);
+                this.setActiveSpace(spaces[x][y]);
             }
         }
     }
