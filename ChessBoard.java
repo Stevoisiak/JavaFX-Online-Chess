@@ -181,11 +181,11 @@ public class ChessBoard extends GridPane
     // Proccesses a move after it has been made by a player
     protected boolean processMove(MoveInfo p)
     {
-        Space oldSpace = spaces[p.getOldX()][p.getOldY()];
-        Space newSpace = spaces[p.getNewX()][p.getNewY()];
-        
         if (moveIsValid(p))
         {
+            Space oldSpace = spaces[p.getOldX()][p.getOldY()];
+            Space newSpace = spaces[p.getNewX()][p.getNewY()];
+            
             newSpace.setPiece( oldSpace.releasePiece() );
             return true;
         }
