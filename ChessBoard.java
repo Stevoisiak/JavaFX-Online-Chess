@@ -41,13 +41,12 @@ public class ChessBoard extends GridPane
         }
     }
 
-    //Use this to get a space, using GridPane methods will (I think) cause color problems
+    // Use this to get a space, using GridPane methods will (I think) cause color problems
     public Space getSpace(int x, int y)
     {
         return spaces[x][y];
     }
 
-    //Use this to get a space, using GridPane methods will (I think) cause color problems
     public void setActiveSpace(Space s)
     {
         // Remove style from old active space
@@ -61,6 +60,7 @@ public class ChessBoard extends GridPane
             this.activeSpace.getStyleClass().add("chess-space-active");
     }
 
+    // Use this to get a space, using GridPane methods will (I think) cause color problems
     public Space getActiveSpace()
     {
         return this.activeSpace;
