@@ -152,17 +152,12 @@ public class ChessBoard extends GridPane
             clickedSpace.getPieceColor() != activeSpace.getPieceColor())
         {            
             MoveInfo p;
-            boolean boardUpdated = false;
-            boolean moveSent = false;
-            
             p = new MoveInfo(activeSpace.getX(), activeSpace.getY(), x, y);
             
             // update gameboard
-            boardUpdated = this.processMove(p);
-            if (boardUpdated) {
+            if (this.processMove(p)) {
                 // send move to other player
-                moveSent = this.sendMove(p);
-                if (moveSent) {
+                if (this.sendMove(p)) {
                     // lock board
                     this.setDisable(true);
                 }
@@ -216,8 +211,7 @@ public class ChessBoard extends GridPane
     // Proccess an opponent's move
     public void processOpponentMove(MoveInfo p)
     {
-        boolean validMove = processMove(p);
-        if (validMove)
+        if (processMove(p))
         {
             // unlock board
             this.setDisable(false);
