@@ -221,18 +221,45 @@ public class ChessBoard extends GridPane
 
     public boolean moveIsValid(MoveInfo p)
     {
-        if (p == null)
-            return false;
-
-        Space oldSpace = spaces[p.getOldX()][p.getOldY()];
-        Space newSpace = spaces[p.getNewX()][p.getNewY()];
+        Space oldSpace;
+        Space newSpace;
         
-        // Moving to same space
-        if (oldSpace == newSpace)
-            return false;
-        // TODO: Space is occupied by friendly piece
-        // TODO: Move is part of piece's valid moves
-        // TODO: Does not put player's own king into check
+        // TODO:
+        //  -Check against list of piece's valid moves ( piece.getMoveIndex() )
+        //  -Check if player's king is put into check
+        //  -Pawn logic (Possibly implement as part of pawn's movelist?)
+        //  -Castling logic
+        
+        // Check for null move
+        if (p == null) { return false; }
+       
+        // Note: Ideally we would check the space coordinates
+        //       beforehand, but the try-catch blocks below were
+        //       easier to implement.
+
+        // Check if oldSpace in range
+        try { oldSpace = spaces[p.getOldX()][p.getOldY()]; }
+        catch (NullPointerException e) { return false; }
+        
+        // Check if newSpace in range
+        try { newSpace = spaces[p.getNewX()][p.getNewY()]; }
+        catch (NullPointerException e) { return false; }
+        
+        // Check if oldSpace is empty; (no movable piece)
+        if (!oldSpace.isOccupied()) { return false; }
+
+        // Check if piece isn't moving
+        if (oldSpace == newSpace) { return false; }
+        
+        // Piece capturing logic
+        if (newSpace.isOccupied())
+        {
+            Piece movedPiece = oldSpace.getPiece();
+            Piece capturedPiece = newSpace.getPiece();
+            
+            // Cannot capture own piece
+            if (movedPiece.getColor() == capturedPiece.getColor()) { return false; }
+        }
         
         return true;
     }
