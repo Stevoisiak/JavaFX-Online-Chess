@@ -145,8 +145,11 @@ public class ChessBoard extends GridPane
 
     public void onSpaceClick(int x, int y)
     {
-        // if piece is selected (active square has a piece)
-        if (activeSpace != null && activeSpace.getPiece() != null)
+        Space clickedSpace = spaces[x][y];
+        // if piece is selected && user didn't click on allied piece
+        if (activeSpace != null &&
+            activeSpace.getPiece() != null &&
+            clickedSpace.getPieceColor() != activeSpace.getPieceColor())
         {            
             MoveInfo p;
             boolean boardUpdated = false;

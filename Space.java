@@ -53,6 +53,14 @@ public class Space extends Button
         this.setGraphic( new ImageView ( piece.getImage() ) );
     }
 
+    public String getPieceColor()
+    {
+        if (getPiece() != null)
+            return getPiece().getColor();
+        else // space empty
+            return "";
+    }
+
     public void setX(int xIn) {this.x = xIn;}
     public int getX() {return this.x;}
 
