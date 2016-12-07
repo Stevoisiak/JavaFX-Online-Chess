@@ -21,10 +21,8 @@ public class ChessBoard extends GridPane
         // initialize 8x8 array of spaces
         for (int x = 0; x < spaces[0].length; x++)
         { 
-            Integer xVal = new Integer(x); //gets value into EventHandler
             for (int y = 0; y < spaces[1].length; y++)
             {
-                Integer yVal = new Integer(y); //gets value into EventHandler
                 boolean light = ( (x + y) % 2 != 0 ); // checkerboard space colors
                 spaces[x][y] = new Space(light, x, y);
 
@@ -33,8 +31,11 @@ public class ChessBoard extends GridPane
                 if (playerIsWhite) { this.add(spaces[x][y], x, 7 - y); }
                 else { this.add(spaces[x][y], 7 - x, y); }
 
+                // Gets values into event handler
+                final int xVal = x;
+                final int yVal = y;
                 //runs things that happen when a space is clicked
-                spaces[x][y].setOnAction( e -> onSpaceClick(xVal.intValue(), yVal.intValue()) );
+                spaces[x][y].setOnAction( e -> onSpaceClick(xVal, yVal) );
 
                 //puts pieces in start positions
                 defineStartPositions(spaces[x][y]);
