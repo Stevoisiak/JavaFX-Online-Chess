@@ -43,6 +43,7 @@ public class ChessGUI extends Application
     private TextArea chatArea; // chat messages
     static public NetworkConnection connection; // Steven: VERY HACKY! TODO: FIX THIS
     private boolean playerIsWhite; // white player = server
+    private boolean offlineMode = false;
 
     @Override
     public void start(Stage mainStage) 
@@ -58,36 +59,39 @@ public class ChessGUI extends Application
         mainScene.getStylesheets().add("assets/stylesheet.css");
 
         // prompt user to select team color
-        playerIsWhite = choosePlayerColor();
-
-        // create chat box
-        VBox chatBox = generateChatBox();
-        root.setRight(chatBox);
+        choosePlayerColor();
 
         // draw chessboard
         board = new ChessBoard(playerIsWhite);
         root.setCenter(board); // sized 400x400
 
         // Initialize server/client
-        if (playerIsWhite)
+        if (!offlineMode)
         {
-            connection = createServer();
-            chatArea.appendText("Connecting to client...\n");
-        }
-        else
-        {
-            connection = createClient();
-            chatArea.appendText("Connecting to server...\n");
-        }
-
-        try
-        {
-            connection.startConnection();
-        }
-        catch ( Exception e )
-        {
-            System.err.println("Error: Failed to start connection");
-            System.exit(1);
+            // create chat box
+            VBox chatBox = generateChatBox();
+            root.setRight(chatBox);
+            
+            if (playerIsWhite)
+            {
+                connection = createServer();
+                chatArea.appendText("Connecting to client...\n");
+            }
+            else
+            {
+                connection = createClient();
+                chatArea.appendText("Connecting to server...\n");
+            }
+    
+            try
+            {
+                connection.startConnection();
+            }
+            catch ( Exception e )
+            {
+                System.err.println("Error: Failed to start connection");
+                System.exit(1);
+            }
         }
 
         // add menuBar
@@ -116,11 +120,8 @@ public class ChessGUI extends Application
     // Prompts the player to choose team color
     // TODO: Change return type to enum so we can return NULL
     //       if user exits without selecting a color;
-    public boolean choosePlayerColor()
+    public void choosePlayerColor()
     {
-        // Set to white by default
-        playerIsWhite = true;
-
         // TODO: If a chess game is currently ongoing, warn that
         //         "Starting a new game while a match is in progress will count as a forfiet."
         //         "Do you still want to start a new game?"
@@ -134,22 +135,26 @@ public class ChessGUI extends Application
         newGameAlert.setHeaderText(null);
         newGameAlert.setContentText("Pick team color");
 
-        ButtonType buttonTypeWhite = new ButtonType("Play White (Server)");
-        ButtonType buttonTypeBlack = new ButtonType("Play Black (Client)");
+        ButtonType buttonTypeWhite = new ButtonType("White (Server)");
+        ButtonType buttonTypeBlack = new ButtonType("Black (Client)");
+        ButtonType buttonTypeOffline = new ButtonType("Offline");
 
-        newGameAlert.getButtonTypes().setAll(buttonTypeWhite, buttonTypeBlack);
+        newGameAlert.getButtonTypes().setAll(buttonTypeWhite, buttonTypeBlack, buttonTypeOffline);
         Optional<ButtonType> result = newGameAlert.showAndWait();
 
         if (result.get() == buttonTypeWhite)
         {
-            playerIsWhite = true;
+            this.playerIsWhite = true;
         }
         else if (result.get() == buttonTypeBlack)
         {
-            playerIsWhite = false;
+            this.playerIsWhite = false;
         }
-
-        return playerIsWhite;
+        else // offline mode
+        {
+            this.playerIsWhite = true;
+            this.offlineMode = true;
+        }
     }
 
     // Initialize Server
