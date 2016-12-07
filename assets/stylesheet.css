@@ -8,8 +8,16 @@
 	-fx-max-width:   50px;
 }
 
+.chess-space-light {
+	-fx-background-color: #FFCE9E;
+}
+
+.chess-space-dark {
+	-fx-background-color: #D18B47;
+}
+
 .chess-space-active {
-	-fx-background-color:   red;
+	-fx-background-color: red;
 }
 
 .chat-box {

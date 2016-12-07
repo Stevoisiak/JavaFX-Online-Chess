@@ -25,7 +25,8 @@ public class ChessBoard extends GridPane
             for (int y = 0; y < spaces[1].length; y++)
             {
                 Integer yVal = new Integer(y); //gets value into EventHandler
-                spaces[x][y] = new Space(x, y);
+                boolean light = ( (x + y) % 2 != 0 ); // checkerboard space colors
+                spaces[x][y] = new Space(light, x, y);
 
                 //if white, add Spaces so ensured bottom left is 0,0
                 //if Black, add Spaces so ensured bottom left is 7,7
