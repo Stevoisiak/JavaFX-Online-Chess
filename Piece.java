@@ -4,9 +4,6 @@ public class Piece
 {
     //to be made abstract later, with getValidMoves() an abstract method
     
-    final boolean WHITE = true;
-    final boolean BLACK = false;
-    
     protected String name;
     protected Image image;
     protected boolean color;
