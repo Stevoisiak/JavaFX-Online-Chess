@@ -9,13 +9,18 @@ public class Space extends Button
     int y;
     Piece piece; // piece currently on space
 
-    public Space(int x, int y)
+    public Space(boolean light, int x, int y)
     {
         super();
         this.x = x;
         this.y = y;
         this.piece = null;
         this.getStyleClass().add("chess-space");
+        
+        if (light)
+            this.getStyleClass().add("chess-space-light");
+        else
+            this.getStyleClass().add("chess-space-dark");
     }
 
     // returns true if space is occupied
