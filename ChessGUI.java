@@ -58,7 +58,7 @@ public class ChessGUI extends Application
         mainScene.getStylesheets().add("assets/stylesheet.css");
 
         // prompt user to select team color
-        playerIsWhite = choosePlayerColor();
+        choosePlayerColor();
 
         // create chat box
         VBox chatBox = generateChatBox();
@@ -116,10 +116,10 @@ public class ChessGUI extends Application
     // Prompts the player to choose team color
     // TODO: Change return type to enum so we can return NULL
     //       if user exits without selecting a color;
-    public boolean choosePlayerColor()
+    public void choosePlayerColor()
     {
         // Set to white by default
-        playerIsWhite = true;
+        this.playerIsWhite = true;
 
         // TODO: If a chess game is currently ongoing, warn that
         //         "Starting a new game while a match is in progress will count as a forfiet."
@@ -142,14 +142,12 @@ public class ChessGUI extends Application
 
         if (result.get() == buttonTypeWhite)
         {
-            playerIsWhite = true;
+            this.playerIsWhite = true;
         }
         else if (result.get() == buttonTypeBlack)
         {
-            playerIsWhite = false;
+            this.playerIsWhite = false;
         }
-
-        return playerIsWhite;
     }
 
     // Initialize Server
