@@ -26,10 +26,7 @@ public class Space extends Button
     // returns true if space is occupied
     public boolean isOccupied()
     {
-        if (this.piece != null)
-            return true;
-        else
-            return false;
+        return (this.piece != null);
     }
 
     // removes piece from space
