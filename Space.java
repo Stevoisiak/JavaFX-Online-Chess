@@ -5,9 +5,9 @@ import javafx.scene.image.*;
 
 public class Space extends Button
 {
-    int x;
-    int y;
-    Piece piece; // piece currently on space
+    private int x;
+    private int y;
+    private Piece piece; // piece currently on space
 
     public Space(boolean light, int x, int y)
     {
