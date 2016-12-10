@@ -33,8 +33,7 @@ public class Space extends Button
     public Piece releasePiece()
     {
         Piece tmpPiece = this.piece;
-        this.piece = null;
-        this.setGraphic(new ImageView());
+        setPiece(null);
         return tmpPiece;
     }
 
@@ -47,7 +46,11 @@ public class Space extends Button
     public void setPiece(Piece piece)
     {
         this.piece = piece;
-        this.setGraphic( new ImageView ( piece.getImage() ) );
+
+        if (this.piece != null)
+            this.setGraphic( new ImageView ( piece.getImage() ) );
+        else
+            this.setGraphic( new ImageView() );
     }
 
     public String getPieceColor()
