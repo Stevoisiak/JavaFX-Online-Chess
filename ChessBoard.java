@@ -92,25 +92,25 @@ public class ChessBoard extends GridPane
         //white pieces
         if(s.getY() == 0 || s.getY() == 1)
         {
-            if (s.getY() == 1){s.setPiece( new Piece("pawn", true) );}
+            if (s.getY() == 1){s.setPiece( new Pawn(true) );}
             else {
                 switch (s.getX())
                 {
-                    case 0: s.setPiece( new Piece("rook", true) );
+                    case 0: s.setPiece( new Rook(true) );
                             break;
-                    case 1: s.setPiece( new Piece("knight", true) );
+                    case 1: s.setPiece( new Knight(true) );
                             break;
-                    case 2: s.setPiece( new Piece("bishop", true) );
+                    case 2: s.setPiece( new Bishop(true) );
                             break;
-                    case 3: s.setPiece( new Piece("queen", true) );
+                    case 3: s.setPiece( new Queen(true) );
                             break;
-                    case 4: s.setPiece( new Piece("king", true) );
+                    case 4: s.setPiece( new King(true) );
                             break;
-                    case 5: s.setPiece( new Piece("bishop", true) );
+                    case 5: s.setPiece( new Bishop(true) );
                             break;
-                    case 6: s.setPiece( new Piece("knight", true) );
+                    case 6: s.setPiece( new Knight(true) );
                             break;
-                    case 7: s.setPiece( new Piece("rook", true) );
+                    case 7: s.setPiece( new Rook(true) );
                             break;
                 }
             }
@@ -118,25 +118,25 @@ public class ChessBoard extends GridPane
         //black pieces
         else if(s.getY() == 6  || s.getY() == 7)
         {
-            if (s.getY() == 6){s.setPiece( new Piece("pawn", false) );}
+            if (s.getY() == 6){s.setPiece( new Pawn(false) );}
             else {
                 switch (s.getX())
                 {
-                    case 0: s.setPiece( new Piece("rook", false) );
+                    case 0: s.setPiece( new Rook(false) );
                             break;
-                    case 1: s.setPiece( new Piece("knight", false) );
+                    case 1: s.setPiece( new Knight(false) );
                             break;
-                    case 2: s.setPiece( new Piece("bishop", false) );
+                    case 2: s.setPiece( new Bishop(false) );
                             break;
-                    case 3: s.setPiece( new Piece("queen", false) );
+                    case 3: s.setPiece( new Queen(false) );
                             break;
-                    case 4: s.setPiece( new Piece("king", false) );
+                    case 4: s.setPiece( new King(false) );
                             break;
-                    case 5: s.setPiece( new Piece("bishop", false) );
+                    case 5: s.setPiece( new Bishop(false) );
                             break;
-                    case 6: s.setPiece( new Piece("knight", false) );
+                    case 6: s.setPiece( new Knight(false) );
                             break;
-                    case 7: s.setPiece( new Piece("rook", false) );
+                    case 7: s.setPiece( new Rook(false) );
                             break;
                 }
             }
