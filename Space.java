@@ -5,9 +5,9 @@ import javafx.scene.image.*;
 
 public class Space extends Button
 {
-    int x;
-    int y;
-    Piece piece; // piece currently on space
+    private int x;
+    private int y;
+    private Piece piece; // piece currently on space
 
     public Space(boolean light, int x, int y)
     {
@@ -26,10 +26,7 @@ public class Space extends Button
     // returns true if space is occupied
     public boolean isOccupied()
     {
-        if (this.piece != null)
-            return true;
-        else
-            return false;
+        return (this.piece != null);
     }
 
     // removes piece from space
