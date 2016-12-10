@@ -1,4 +1,3 @@
-
 public class Pawn extends Piece
 {
     public Pawn(boolean color)
@@ -52,6 +51,5 @@ public class Pawn extends Piece
     }
 
     protected boolean usesSingleMove(){return true;}
-
     protected String getName(){return "pawn";}
 }

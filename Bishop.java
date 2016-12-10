@@ -1,4 +1,3 @@
-
 public class Bishop extends Piece
 {
     public Bishop(boolean color)
@@ -6,7 +5,7 @@ public class Bishop extends Piece
         //this calls the constructor of Piece
         super(color);
     }
-    
+
     protected MoveList[] getValidMoves()
     {
         MoveList[] m =
@@ -18,6 +17,7 @@ public class Bishop extends Piece
             };
         return m;
     }
+
     protected boolean usesSingleMove(){return false;}
     protected String getName(){return "bishop";}
 }

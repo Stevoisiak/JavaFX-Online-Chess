@@ -1,4 +1,3 @@
-
 public class King extends Piece
 {
     public King(boolean color)
@@ -6,7 +5,7 @@ public class King extends Piece
         //this calls the constructor of Piece
         super(color);
     }
-    
+
     protected MoveList[] getValidMoves()
     {
         MoveList[] m =
@@ -22,6 +21,7 @@ public class King extends Piece
             };
         return m;
     }
+
     protected boolean usesSingleMove(){return true;}
     protected String getName(){return "king";}
 }
