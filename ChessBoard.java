@@ -90,30 +90,30 @@ public class ChessBoard extends GridPane
     public void defineStartPositions()
     {
         // white pieces
-        this.spaces[0][0].setPiece( new Piece("rook", true) );
-        this.spaces[1][0].setPiece( new Piece("knight", true) );
-        this.spaces[2][0].setPiece( new Piece("bishop", true) );
-        this.spaces[3][0].setPiece( new Piece("queen", true) );
-        this.spaces[4][0].setPiece( new Piece("king", true) );
-        this.spaces[5][0].setPiece( new Piece("bishop", true) );
-        this.spaces[6][0].setPiece( new Piece("knight", true) );
-        this.spaces[7][0].setPiece( new Piece("rook", true) );
+        this.spaces[0][0].setPiece( new Rook  (true) );
+        this.spaces[1][0].setPiece( new Knight(true) );
+        this.spaces[2][0].setPiece( new Bishop(true) );
+        this.spaces[3][0].setPiece( new Queen (true) );
+        this.spaces[4][0].setPiece( new King  (true) );
+        this.spaces[5][0].setPiece( new Bishop(true) );
+        this.spaces[6][0].setPiece( new Knight(true) );
+        this.spaces[7][0].setPiece( new Rook  (true) );
 
         for (int i = 0; i < this.spaces[0].length; i++)
-            this.spaces[i][1].setPiece( new Piece("pawn", true) );
+            this.spaces[i][1].setPiece( new Pawn(true) );
 
         // black pieces
-        this.spaces[0][7].setPiece( new Piece("rook", false) );
-        this.spaces[1][7].setPiece( new Piece("knight", false) );
-        this.spaces[2][7].setPiece( new Piece("bishop", false) );
-        this.spaces[3][7].setPiece( new Piece("queen", false) );
-        this.spaces[4][7].setPiece( new Piece("king", false) );
-        this.spaces[5][7].setPiece( new Piece("bishop", false) );
-        this.spaces[6][7].setPiece( new Piece("knight", false) );
-        this.spaces[7][7].setPiece( new Piece("rook", false) );
+        this.spaces[0][7].setPiece( new Rook  (false) );
+        this.spaces[1][7].setPiece( new Knight(false) );
+        this.spaces[2][7].setPiece( new Bishop(false) );
+        this.spaces[3][7].setPiece( new Queen (false) );
+        this.spaces[4][7].setPiece( new King  (false) );
+        this.spaces[5][7].setPiece( new Bishop(false) );
+        this.spaces[6][7].setPiece( new Knight(false) );
+        this.spaces[7][7].setPiece( new Rook  (false) );
 
         for (int i = 0; i < this.spaces[0].length; i++)
-            this.spaces[i][6].setPiece( new Piece("pawn", false) );
+            this.spaces[i][6].setPiece( new Pawn(false) );
     }
 
     public void onSpaceClick(int x, int y)
