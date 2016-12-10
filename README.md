@@ -3,7 +3,7 @@ Simple chess program written in JavaFX
 
 ## TODO list
 * Piece movement
-  * Create list of valid movements for each piece
+  * ~~Create list of valid movements for each piece~~
   * Check against moveList when calling moveIsValid() [ChessBoard.java]
   * Create exceptions for pawn movement
 * Board rules
