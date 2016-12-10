@@ -19,7 +19,7 @@ public abstract class Piece
         String filename = this.getColor() + "_" + this.getName() + ".png";
         this.image = new Image(location + filename);
 
-        //getPieceMoves, usesSingleMove, getName defined in classes
+        //getPieceMoves(), usesSingleMove(), getName() defined in classes
 
     }
 
