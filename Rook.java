@@ -6,7 +6,7 @@ public class Rook extends Piece
         super(color);
     }
 
-    protected MoveList[] getValidMoves()
+    protected MoveList[] getPieceMoves()
     {
         MoveList[] m =
             {

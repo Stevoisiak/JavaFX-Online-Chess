@@ -6,7 +6,7 @@ public class Pawn extends Piece
         super(color);
     }
 
-    protected MoveList[] getValidMoves()
+    protected MoveList[] getPieceMoves()
     {
         //Pawn movement is HIGHLY conditional, these are all POSSIBLE valid moves
         boolean isWhite = this.color;

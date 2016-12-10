@@ -19,7 +19,7 @@ public abstract class Piece
         String filename = this.getColor() + "_" + this.getName() + ".png";
         this.image = new Image(location + filename);
 
-        //getValidMoves, usesSingleMove, getName defined in classes
+        //getPieceMoves, usesSingleMove, getName defined in classes
 
     }
 
@@ -59,7 +59,7 @@ public abstract class Piece
         return (this.getName() + " " + this.getColor());
     }
 
-    protected abstract MoveList[] getValidMoves();
+    protected abstract MoveList[] getPieceMoves();
     protected abstract boolean usesSingleMove();
     protected abstract String getName();
 }
