@@ -195,9 +195,9 @@ public class ChessBoard extends GridPane
     {
         Space oldSpace;
         Space newSpace;
+        MoveList[] moves;
         
         // TODO:
-        //  -Check against list of piece's valid moves ( piece.getMoveIndex() )
         //  -Check if player's king is put into check
         //  -Pawn logic (Possibly implement as part of pawn's movelist?)
         //  -Castling logic
@@ -220,9 +220,19 @@ public class ChessBoard extends GridPane
         // Check if oldSpace is empty; (no movable piece)
         if (!oldSpace.isOccupied()) { return false; }
 
-        // Check if piece isn't moving
-        if (oldSpace == newSpace) { return false; }
-        
+        // Check piece's move list
+        moves = oldSpace.getPiece().getPieceMoves();
+        boolean matchesPieceMoves = false;
+        for (MoveList m : moves)
+        {
+            if ( m.isEqual( p.getGapX(), p.getGapY() ) )
+            {
+                matchesPieceMoves = true;
+                break;
+            }
+        }
+        if (!matchesPieceMoves) { return false; }
+
         // Piece capturing logic
         if (newSpace.isOccupied())
         {
