@@ -6,6 +6,7 @@ public class Pawn extends Piece
         super(color);
     }
 
+    @Override
     protected MoveList[] getPieceMoves()
     {
         //Pawn movement is HIGHLY conditional, these are all POSSIBLE valid moves
@@ -50,6 +51,9 @@ public class Pawn extends Piece
         return moves;
     }
 
+    @Override
     protected boolean usesSingleMove(){return true;}
+
+    @Override
     protected String getName(){return "pawn";}
 }
