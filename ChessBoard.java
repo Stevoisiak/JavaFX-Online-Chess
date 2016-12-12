@@ -154,7 +154,10 @@ public class ChessBoard extends GridPane
     public boolean sendMove(MoveInfo p)
     {
          try {
-             ChessGUI.connection.send(p); // Steven: VERY HACKY! TODO: FIX THIS
+             // Hacky: This only works because ChessGUI has
+             //        public static NetworkConnection connection.
+             //        Ideally, connection would be private.
+             ChessGUI.connection.send(p);
          }
          catch (Exception e) {
              System.err.println("Error: Failed to send move");

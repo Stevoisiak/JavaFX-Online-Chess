@@ -39,9 +39,12 @@ public class ChessGUI extends Application
         }
     }
 
+    // Hack: Set connection as public static so it may be used
+    //       by ChessBoard to send moves. (VERY HACKY!)
+    public static NetworkConnection connection;
+
     private ChessBoard board;
     private TextArea chatArea; // chat messages
-    static public NetworkConnection connection; // Steven: VERY HACKY! TODO: FIX THIS
     private boolean playerIsWhite; // white player = server
     private boolean offlineMode = false;
 
