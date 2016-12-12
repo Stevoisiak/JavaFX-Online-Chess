@@ -74,7 +74,7 @@ public class ChessGUI extends Application
             // create chat box
             VBox chatBox = generateChatBox();
             root.setRight(chatBox);
-            
+
             if (playerIsWhite)
             {
                 connection = createServer();
@@ -85,7 +85,7 @@ public class ChessGUI extends Application
                 connection = createClient();
                 chatArea.appendText("Connecting to server...\n");
             }
-    
+
             try
             {
                 connection.startConnection();

@@ -211,7 +211,7 @@ public class ChessBoard extends GridPane
         
         // Check for null move
         if (p == null) { return false; }
-       
+        
         // Note: Ideally we would check the space coordinates
         //       beforehand, but the try-catch blocks below were
         //       easier to implement.
