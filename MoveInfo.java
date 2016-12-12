@@ -38,6 +38,9 @@ public class MoveInfo implements Serializable
     public void setNewX(int newX){this.newX = newX;}
     public void setNewY(int newX){this.newY = newX;}
 
+    public int getGapX(){return this.newX - this.oldX;}
+    public int getGapY(){return this.newY - this.oldY;}
+
     // Converts x number poisition to character label
     private String getCharLabel(int i)
     {
