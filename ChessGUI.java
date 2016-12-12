@@ -275,7 +275,10 @@ public class ChessGUI extends Application
 
         MenuItem menuItemAbout = new MenuItem("About");
         //menuItemAbout.setGraphic( new ImageView( new Image("assets/icons/about.png", 16, 16, true, true) ) );
-        menuItemAbout.setAccelerator( new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN) ); // BUG: Key combo not working
+        // Note: Accelerator F1 does not work if TextField is
+        //       in focus. This is a known issue in JavaFX.
+        //       https://bugs.openjdk.java.net/browse/JDK-8148857
+        menuItemAbout.setAccelerator( new KeyCodeCombination(KeyCode.F1) );
         menuItemAbout.setOnAction(e -> onDisplayAbout());
         menuHelp.getItems().add(menuItemAbout);
 

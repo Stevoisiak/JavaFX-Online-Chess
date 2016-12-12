@@ -5,9 +5,9 @@ import javafx.scene.image.*;
 
 public class Space extends Button
 {
-    int x;
-    int y;
-    Piece piece; // piece currently on space
+    private int x;
+    private int y;
+    private Piece piece; // piece currently on space
 
     public Space(boolean light, int x, int y)
     {
@@ -26,18 +26,14 @@ public class Space extends Button
     // returns true if space is occupied
     public boolean isOccupied()
     {
-        if (this.piece != null)
-            return true;
-        else
-            return false;
+        return (this.piece != null);
     }
 
     // removes piece from space
     public Piece releasePiece()
     {
         Piece tmpPiece = this.piece;
-        this.piece = null;
-        this.setGraphic(new ImageView());
+        setPiece(null);
         return tmpPiece;
     }
 
@@ -50,7 +46,19 @@ public class Space extends Button
     public void setPiece(Piece piece)
     {
         this.piece = piece;
-        this.setGraphic( new ImageView ( piece.getImage() ) );
+
+        if (this.piece != null)
+            this.setGraphic( new ImageView ( piece.getImage() ) );
+        else
+            this.setGraphic( new ImageView() );
+    }
+
+    public String getPieceColor()
+    {
+        if (getPiece() != null)
+            return getPiece().getColor();
+        else // space empty
+            return "";
     }
 
     public void setX(int xIn) {this.x = xIn;}

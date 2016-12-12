@@ -1,41 +1,44 @@
 import javafx.scene.image.*;
 
-public class Piece
+public abstract class Piece
 {
-    //to be made abstract later, with getValidMoves() an abstract method
-    
-    final boolean WHITE = true;
-    final boolean BLACK = false;
-    
-    protected String name;
+    protected boolean hasMoved;
     protected Image image;
     protected boolean color;
-    protected boolean singleMove;
-    
+
     // validMoves
-    
-    public Piece(String name, boolean color)
+
+    public Piece(boolean color)
     {
-        this.name = name;
         this.color = color;
-        
-        //since image can be inferred from name, probably won't be needed once have Piece subclasses
+
+        //for pawn double move and castling(?)
+        hasMoved = false;
+
         String location = "assets/pieces/";
         String filename = this.getColor() + "_" + this.getName() + ".png";
         this.image = new Image(location + filename);
+
+        //getPieceMoves(), usesSingleMove(), getName() defined in classes
+
     }
-    
-    public String getName()
+
+    public boolean getHasMoved()
     {
-        return this.name;
+        return this.hasMoved;
     }
-    
+
+    public void setHasMoved(boolean shouldBeTrue)
+    {
+        this.hasMoved = shouldBeTrue;
+    }
+
     // Returns image of chess piece
     public Image getImage()
     {
         return this.image;
     }
-    
+
     // Get piece color as string
     public String getColor()
     {
@@ -44,15 +47,19 @@ public class Piece
         else
             return "black";
     }
-    
+
     // returns true if color is white
     public boolean isWhite()
     {
         return this.color;
     }
-    
+
     public String toString()
     {
         return (this.getName() + " " + this.getColor());
     }
+
+    protected abstract MoveList[] getPieceMoves();
+    protected abstract boolean usesSingleMove();
+    protected abstract String getName();
 }

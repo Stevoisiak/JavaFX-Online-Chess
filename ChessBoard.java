@@ -21,10 +21,8 @@ public class ChessBoard extends GridPane
         // initialize 8x8 array of spaces
         for (int x = 0; x < spaces[0].length; x++)
         { 
-            Integer xVal = new Integer(x); //gets value into EventHandler
             for (int y = 0; y < spaces[1].length; y++)
             {
-                Integer yVal = new Integer(y); //gets value into EventHandler
                 boolean light = ( (x + y) % 2 != 0 ); // checkerboard space colors
                 spaces[x][y] = new Space(light, x, y);
 
@@ -33,13 +31,16 @@ public class ChessBoard extends GridPane
                 if (playerIsWhite) { this.add(spaces[x][y], x, 7 - y); }
                 else { this.add(spaces[x][y], 7 - x, y); }
 
+                // Gets values into event handler
+                final int xVal = x;
+                final int yVal = y;
                 //runs things that happen when a space is clicked
-                spaces[x][y].setOnAction( e -> onSpaceClick(xVal.intValue(), yVal.intValue()) );
-
-                //puts pieces in start positions
-                defineStartPositions(spaces[x][y]);
+                spaces[x][y].setOnAction( e -> onSpaceClick(xVal, yVal) );
             }
         }
+
+        //put pieces in start positions
+        this.defineStartPositions();
     }
 
     // Use this to get a space, using GridPane methods will (I think) cause color problems
@@ -86,79 +87,50 @@ public class ChessBoard extends GridPane
     }
 
     //define the starting piece positions
-    public void defineStartPositions(Space s)
+    public void defineStartPositions()
     {
-        //white pieces
-        if(s.getY() == 0 || s.getY() == 1)
-        {
-            if (s.getY() == 1){s.setPiece( new Piece("pawn", true) );}
-            else {
-                switch (s.getX())
-                {
-                    case 0: s.setPiece( new Piece("rook", true) );
-                            break;
-                    case 1: s.setPiece( new Piece("knight", true) );
-                            break;
-                    case 2: s.setPiece( new Piece("bishop", true) );
-                            break;
-                    case 3: s.setPiece( new Piece("queen", true) );
-                            break;
-                    case 4: s.setPiece( new Piece("king", true) );
-                            break;
-                    case 5: s.setPiece( new Piece("bishop", true) );
-                            break;
-                    case 6: s.setPiece( new Piece("knight", true) );
-                            break;
-                    case 7: s.setPiece( new Piece("rook", true) );
-                            break;
-                }
-            }
-        }
-        //black pieces
-        else if(s.getY() == 6  || s.getY() == 7)
-        {
-            if (s.getY() == 6){s.setPiece( new Piece("pawn", false) );}
-            else {
-                switch (s.getX())
-                {
-                    case 0: s.setPiece( new Piece("rook", false) );
-                            break;
-                    case 1: s.setPiece( new Piece("knight", false) );
-                            break;
-                    case 2: s.setPiece( new Piece("bishop", false) );
-                            break;
-                    case 3: s.setPiece( new Piece("queen", false) );
-                            break;
-                    case 4: s.setPiece( new Piece("king", false) );
-                            break;
-                    case 5: s.setPiece( new Piece("bishop", false) );
-                            break;
-                    case 6: s.setPiece( new Piece("knight", false) );
-                            break;
-                    case 7: s.setPiece( new Piece("rook", false) );
-                            break;
-                }
-            }
-        }
+        // white pieces
+        this.spaces[0][0].setPiece( new Rook  (true) );
+        this.spaces[1][0].setPiece( new Knight(true) );
+        this.spaces[2][0].setPiece( new Bishop(true) );
+        this.spaces[3][0].setPiece( new Queen (true) );
+        this.spaces[4][0].setPiece( new King  (true) );
+        this.spaces[5][0].setPiece( new Bishop(true) );
+        this.spaces[6][0].setPiece( new Knight(true) );
+        this.spaces[7][0].setPiece( new Rook  (true) );
+
+        for (int i = 0; i < this.spaces[0].length; i++)
+            this.spaces[i][1].setPiece( new Pawn(true) );
+
+        // black pieces
+        this.spaces[0][7].setPiece( new Rook  (false) );
+        this.spaces[1][7].setPiece( new Knight(false) );
+        this.spaces[2][7].setPiece( new Bishop(false) );
+        this.spaces[3][7].setPiece( new Queen (false) );
+        this.spaces[4][7].setPiece( new King  (false) );
+        this.spaces[5][7].setPiece( new Bishop(false) );
+        this.spaces[6][7].setPiece( new Knight(false) );
+        this.spaces[7][7].setPiece( new Rook  (false) );
+
+        for (int i = 0; i < this.spaces[0].length; i++)
+            this.spaces[i][6].setPiece( new Pawn(false) );
     }
 
     public void onSpaceClick(int x, int y)
     {
-        // if piece is selected (active square has a piece)
-        if (activeSpace != null && activeSpace.getPiece() != null)
+        Space clickedSpace = spaces[x][y];
+        // if piece is selected && user didn't click on allied piece
+        if (activeSpace != null &&
+            activeSpace.getPiece() != null &&
+            clickedSpace.getPieceColor() != activeSpace.getPieceColor())
         {            
             MoveInfo p;
-            boolean boardUpdated = false;
-            boolean moveSent = false;
-            
             p = new MoveInfo(activeSpace.getX(), activeSpace.getY(), x, y);
             
             // update gameboard
-            boardUpdated = this.processMove(p);
-            if (boardUpdated) {
+            if (this.processMove(p)) {
                 // send move to other player
-                moveSent = this.sendMove(p);
-                if (moveSent) {
+                if (this.sendMove(p)) {
                     // lock board
                     this.setDisable(true);
                 }
@@ -212,8 +184,7 @@ public class ChessBoard extends GridPane
     // Proccess an opponent's move
     public void processOpponentMove(MoveInfo p)
     {
-        boolean validMove = processMove(p);
-        if (validMove)
+        if (processMove(p))
         {
             // unlock board
             this.setDisable(false);
