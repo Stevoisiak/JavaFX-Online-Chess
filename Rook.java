@@ -6,6 +6,7 @@ public class Rook extends Piece
         super(color);
     }
 
+    @Override
     protected MoveList[] getPieceMoves()
     {
         MoveList[] m =
@@ -18,6 +19,9 @@ public class Rook extends Piece
         return m;
     }
 
+    @Override
     protected boolean usesSingleMove(){return false;}
+
+    @Override
     protected String getName(){return "rook";}
 }
