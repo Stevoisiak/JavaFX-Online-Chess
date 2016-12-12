@@ -6,7 +6,6 @@ public class Queen extends Piece
         super(color);
     }
 
-    @Override
     protected MoveList[] getPieceMoves()
     {
         MoveList[] m =
@@ -23,9 +22,6 @@ public class Queen extends Piece
         return m;
     }
 
-    @Override
     protected boolean usesSingleMove(){return false;}
-
-    @Override
     protected String getName(){return "queen";}
 }
