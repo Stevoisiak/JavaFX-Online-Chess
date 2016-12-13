@@ -52,12 +52,12 @@ public class ChessBoard extends GridPane
     public void setActiveSpace(Space s)
     {
         // Remove style from old active space
-		if (this.activeSpace != null) 
+        if (this.activeSpace != null) 
             this.activeSpace.getStyleClass().removeAll("chess-space-active");
-            
+
         this.activeSpace = s;
-        
-		// Add style to new active space
+
+        // Add style to new active space
         if (this.activeSpace != null) 
             this.activeSpace.getStyleClass().add("chess-space-active");
     }
@@ -121,16 +121,16 @@ public class ChessBoard extends GridPane
         Space clickedSpace = spaces[x][y];
         // if piece is selected && user didn't click on allied piece
         if (activeSpace != null &&
-            activeSpace.getPiece() != null &&
-            clickedSpace.getPieceColor() != activeSpace.getPieceColor())
+        activeSpace.getPiece() != null &&
+        clickedSpace.getPieceColor() != activeSpace.getPieceColor())
         {            
             MoveInfo p;
             p = new MoveInfo(activeSpace.getX(), activeSpace.getY(), x, y);
-            
+
             // Hacky: Determine if ChessGUI's offlineMode is enabled by checking
             //        if 'connection' was ever initialized.
             boolean offlineMode = (ChessGUI.connection == null);
-            
+
             // update gameboard
             if (this.processMove(p) && !offlineMode) {
                 // send move to other player
@@ -157,20 +157,20 @@ public class ChessBoard extends GridPane
     // Send move via Internet to other player
     public boolean sendMove(MoveInfo p)
     {
-         try {
-             // Hacky: This only works because ChessGUI has
-             //        public static NetworkConnection connection.
-             //        Ideally, connection would be private.
-             ChessGUI.connection.send(p);
-         }
-         catch (Exception e) {
-             System.err.println("Error: Failed to send move");
-             return false;
-         }
-         
-         return true;
+        try {
+            // Hacky: This only works because ChessGUI has
+            //        public static NetworkConnection connection.
+            //        Ideally, connection would be private.
+            ChessGUI.connection.send(p);
+        }
+        catch (Exception e) {
+            System.err.println("Error: Failed to send move");
+            return false;
+        }
+
+        return true;
     }
-    
+
     // Proccess a move after it has been made by a player
     protected boolean processMove(MoveInfo p)
     {
@@ -178,7 +178,7 @@ public class ChessBoard extends GridPane
         {
             Space oldSpace = spaces[p.getOldX()][p.getOldY()];
             Space newSpace = spaces[p.getNewX()][p.getNewY()];
-            
+
             newSpace.setPiece( oldSpace.releasePiece() );
             return true;
         }
@@ -187,7 +187,7 @@ public class ChessBoard extends GridPane
             return false;
         }
     }
-    
+
     // Proccess an opponent's move
     public void processOpponentMove(MoveInfo p)
     {
@@ -202,16 +202,17 @@ public class ChessBoard extends GridPane
     {
         Space oldSpace;
         Space newSpace;
-        
+        Piece piece;
+        MoveList[] moves;
+
         // TODO:
-        //  -Check against list of piece's valid moves ( piece.getMoveIndex() )
         //  -Check if player's king is put into check
         //  -Pawn logic (Possibly implement as part of pawn's movelist?)
         //  -Castling logic
-        
+
         // Check for null move
         if (p == null) { return false; }
-        
+
         // Note: Ideally we would check the space coordinates
         //       beforehand, but the try-catch blocks below were
         //       easier to implement.
@@ -219,27 +220,66 @@ public class ChessBoard extends GridPane
         // Check if oldSpace in range
         try { oldSpace = spaces[p.getOldX()][p.getOldY()]; }
         catch (NullPointerException e) { return false; }
-        
+
         // Check if newSpace in range
         try { newSpace = spaces[p.getNewX()][p.getNewY()]; }
         catch (NullPointerException e) { return false; }
-        
+
         // Check if oldSpace is empty; (no movable piece)
         if (!oldSpace.isOccupied()) { return false; }
 
-        // Check if piece isn't moving
-        if (oldSpace == newSpace) { return false; }
+        // Check piece's move list
+        piece = oldSpace.getPiece();
+        moves = piece.getPieceMoves();
+        boolean matchesPieceMoves = false;
         
+        //for Pieces that move more than 1 base move (Bishop, Rook, Queen)
+        int multiMoveCount;
+        double smushedGapX;
+        double smushedGapY;
+
+        //labels this loop to break out later
+        MoveLoop:
+        for (MoveList m : moves)
+        {//iterates through mutiple times if has multiple possible moves
+            multiMoveCount = 1;
+            if(piece.usesSingleMove() == false) {multiMoveCount = 8;}
+
+            //iterates multiple times if multimove to find "reduced" move
+            //may iterate through extra times off board, those moves already eliminated.
+            //While there are DEFINITELY more efficient ways of doing this,
+            //This one is currently working, and it is thus currently superior.
+            for(; multiMoveCount > 0; multiMoveCount--)
+            {
+                //"reduces" move to try to turn it into a MoveList base move
+                //wasteful, but will exist iff the move is a "stretched" base move
+                smushedGapX = p.getGapX() / (multiMoveCount + 0.0);
+                smushedGapY = p.getGapY() / (multiMoveCount + 0.0);
+                
+                //Is the double really an int? (to avoid integer division false positives)
+                if(smushedGapX % 1 == 0 && smushedGapY % 1 == 0)
+                {   //is the reduced move a valid move
+                    if ( m.isEqual( (int) smushedGapX, (int) smushedGapY ) )
+                    {
+                        matchesPieceMoves = true;
+                        //breaks out of MoveLoop (both loops)
+                        break MoveLoop;
+                    }
+                }
+            }
+        }
+        if (!matchesPieceMoves) { return false; }
+
         // Piece capturing logic
         if (newSpace.isOccupied())
         {
             Piece movedPiece = oldSpace.getPiece();
             Piece capturedPiece = newSpace.getPiece();
-            
+
             // Cannot capture own piece
             if (movedPiece.getColor() == capturedPiece.getColor()) { return false; }
         }
-        
+
         return true;
     }
 }
