@@ -127,8 +127,12 @@ public class ChessBoard extends GridPane
             MoveInfo p;
             p = new MoveInfo(activeSpace.getX(), activeSpace.getY(), x, y);
 
+            // Hacky: Determine if ChessGUI's offlineMode is enabled by checking
+            //        if 'connection' was ever initialized.
+            boolean offlineMode = (ChessGUI.connection == null);
+
             // update gameboard
-            if (this.processMove(p)) {
+            if (this.processMove(p) && !offlineMode) {
                 // send move to other player
                 if (this.sendMove(p)) {
                     // lock board
@@ -154,7 +158,10 @@ public class ChessBoard extends GridPane
     public boolean sendMove(MoveInfo p)
     {
         try {
-            ChessGUI.connection.send(p); // Steven: VERY HACKY! TODO: FIX THIS
+            // Hacky: This only works because ChessGUI has
+            //        public static NetworkConnection connection.
+            //        Ideally, connection would be private.
+            ChessGUI.connection.send(p);
         }
         catch (Exception e) {
             System.err.println("Error: Failed to send move");
