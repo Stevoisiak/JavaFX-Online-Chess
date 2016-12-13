@@ -52,7 +52,7 @@ public class ChessGUI extends Application
     public void start(Stage mainStage) 
     {
         mainStage.setTitle("Chess Game");
-        //mainStage.getIcons().add( new Image("assets/icons/app_icon.png") );
+        mainStage.getIcons().add( new Image("assets/icons/app_icon.png") );
 
         BorderPane root = new BorderPane();
         Scene mainScene = new Scene(root);
@@ -222,7 +222,8 @@ public class ChessGUI extends Application
 
         infoAlert.setContentText("Programmed by Maxwell Sirotin and Steven Vascellaro.\n\n" +
             "Chess icons by \"Colin M.L. Burnett\".\n\n" + 
-            "Networking package & chat client based on \n\"JavaFX Software: Chat (Server-Client)\" \nby Almas Baimagambetov." );
+            "Networking package & chat client based on \n\"JavaFX Software: Chat (Server-Client)\" \nby Almas Baimagambetov.\n\n" +
+            "App icon by BlackVariant.");
         infoAlert.showAndWait();
     }
 
