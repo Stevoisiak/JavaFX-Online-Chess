@@ -84,6 +84,8 @@ public class ChessGUI extends Application
             {
                 connection = createClient();
                 chatArea.appendText("Connecting to server...\n");
+                // lock board until white makes first move
+                board.setDisable(true);
             }
 
             try
