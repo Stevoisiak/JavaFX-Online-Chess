@@ -13,6 +13,8 @@ Simple chess program written in JavaFX
   * Pawns restricted to one-way movement
 * Chat area for messages between players
 * Both client & server validate moves before updating board
+* Licensed for reuse under MIT License
+* Customizable board colors via stylesheet.css
 
 ## Missing Features
 
@@ -25,10 +27,18 @@ Simple chess program written in JavaFX
 * Queens, Rooks, and Bishops can move past occupied spaces
 * GameBoard can be interacted with before client-server connection is established
 
+## Edge Cases
+
+* If the client cannot find a server (ie: client started before server), chatbox displays "Error: Failed to connect to server"
+* Players cannot capture their own pieces. Clicking on a piece of the same color will update the currently selected piece
+
 ## Future plans
 
 * When a piece is selected, hightlight spaces it can move to
 * Implement check, checkmate, & stalemate
+* Add ability to surrender
+* Option to start a new game without closing connection
+* Update licensing so project can be made public on GitHub
 
 ## TODO list
 * Piece movement
