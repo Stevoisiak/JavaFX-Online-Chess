@@ -39,6 +39,7 @@ Simple chess program written in JavaFX
 * Add ability to surrender
 * Option to start a new game without closing connection
 * Update licensing so project can be made public on GitHub
+* Add indicator showing which player's turn it is
 
 ## TODO list
 * Piece movement
