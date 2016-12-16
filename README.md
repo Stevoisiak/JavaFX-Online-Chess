@@ -18,9 +18,10 @@ Simple chess program written in JavaFX
 
 ## Missing Features
 
-* Special pawn rules (Piece promotion, 2 space movement, en passant, etc)
+* Special pawn rules (Piece promotion, en passant, only capture diagonally, situational 2 space movement, etc)
 * Indicators for check, checkmate, and stalemate
 * Handling for edge case where client & server disagree on whether a move is valid
+* Allow castling
 
 ## Bugs
 
@@ -38,7 +39,7 @@ Simple chess program written in JavaFX
 * Implement check, checkmate, & stalemate
 * Add ability to surrender
 * Option to start a new game without closing connection
-* Update licensing so project can be made public on GitHub
+* Switch project to public on GitHub
 * Add indicator showing which player's turn it is
 
 ## TODO list
@@ -56,8 +57,8 @@ Simple chess program written in JavaFX
   * When a piece is selected, highlight spaces it can move to
 * GUI
   * ~~Add option for offline mode.~~
+  * ~~Only allow White player to make the first move.~~
   * Add label to show which player's turn it is.
-  * Only allow White player to make the first move.
   * Add "surrender" button
 * Documentation
   * README: Add usage instructions.
