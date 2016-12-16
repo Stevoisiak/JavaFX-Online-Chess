@@ -3,6 +3,7 @@ package Networking;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.net.ConnectException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.function.Consumer;
@@ -71,6 +72,9 @@ public abstract class NetworkConnection
                     Serializable data = (Serializable) in.readObject();
                     onRecieveCallback.accept(data);
                 }
+            }
+            catch (ConnectException e) {
+                onRecieveCallback.accept("Error: Could not connect to server");
             }
             catch (Exception e) {
                 onRecieveCallback.accept("Connection closed");
