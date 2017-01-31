@@ -1,5 +1,5 @@
 # JavaFX-Online-Chess
-Simple chess program written in JavaFX
+Simple chess program written in JavaFX. Note that by default this program uses localhost for multiplayer.
 
 ## Feature List
 
