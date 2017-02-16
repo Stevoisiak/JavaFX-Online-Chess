@@ -1,7 +1,5 @@
-import javafx.scene.control.*;
-import javafx.event.*;
-import javafx.scene.*;
-import javafx.scene.image.*;
+import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 
 public class Space extends Button
 {

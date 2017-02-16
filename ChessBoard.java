@@ -1,9 +1,4 @@
-import javafx.event.*;
-import java.util.function.*;
-import javafx.scene.*;
-import javafx.scene.layout.*;
-import javafx.scene.image.*;
-import java.util.Optional;
+import javafx.scene.layout.GridPane;
 
 public class ChessBoard extends GridPane
 {

@@ -1,26 +1,25 @@
-import Networking.*;
-
-import javafx.application.*;
+import java.util.Optional;
+import Networking.Client;
+import Networking.NetworkConnection;
+import Networking.Server;
+import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.stage.*;
-import javafx.scene.*;
-import javafx.scene.canvas.*;
-import javafx.scene.control.*;
-import javafx.scene.control.Alert.*;
-import javafx.scene.effect.*;
-import javafx.scene.image.*;
-import javafx.scene.input.*;
-import javafx.scene.layout.*;
-import javafx.scene.paint.*;
-import javafx.scene.shape.*;
-import javafx.scene.text.*;
-import javafx.beans.property.*;
-import javafx.beans.value.*;
-import javafx.event.*; 
-import javafx.animation.*;
-import javafx.geometry.*;
-import java.io.*;
-import java.util.*;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class ChessGUI extends Application 
 {
