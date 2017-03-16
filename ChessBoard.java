@@ -230,8 +230,8 @@ public class ChessBoard extends GridPane
         
         //for Pieces that move more than 1 base move (Bishop, Rook, Queen)
         int multiMoveCount;
-        double smushedGapX;
-        double smushedGapY;
+        double stretchedMoveX;
+        double stretchedMoveY;
 
         //labels this loop to break out later
         MoveLoop:
@@ -240,26 +240,17 @@ public class ChessBoard extends GridPane
             multiMoveCount = 1;
             if(piece.usesSingleMove() == false) {multiMoveCount = 8;}
 
-            //iterates multiple times if multimove to find "reduced" move
-            //may iterate through extra times off board, those moves already eliminated.
-            //While there are DEFINITELY more efficient ways of doing this,
-            //This one is currently working, and it is thus currently superior.
-            for(; multiMoveCount > 0; multiMoveCount--)
+            for(int c = 1; c <= multiMoveCount; c++)
             {
-                //"reduces" move to try to turn it into a MoveList base move
-                //wasteful, but will exist iff the move is a "stretched" base move
-                smushedGapX = p.getGapX() / (multiMoveCount + 0.0);
-                smushedGapY = p.getGapY() / (multiMoveCount + 0.0);
-                
-                //Is the double really an int? (to avoid integer division false positives)
-                if(smushedGapX % 1 == 0 && smushedGapY % 1 == 0)
-                {   //is the reduced move a valid move
-                    if ( m.isEqual( (int) smushedGapX, (int) smushedGapY ) )
-                    {
-                        matchesPieceMoves = true;
-                        //breaks out of MoveLoop (both loops)
-                        break MoveLoop;
-                    }
+                //stretches a base move out to see if it matches the move made
+                stretchedMoveX = m.getX() * c;
+                stretchedMoveY = m.getY() * c;
+
+                if ( p.getGapX() == stretchedMoveX && p.getGapY() == stretchedMoveY)
+                {
+                    matchesPieceMoves = true;
+                    //breaks out of MoveLoop (both loops)
+                    break MoveLoop;
                 }
             }
         }
