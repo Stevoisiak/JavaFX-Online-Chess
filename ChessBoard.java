@@ -15,7 +15,7 @@ public class ChessBoard extends GridPane
 
         // initialize 8x8 array of spaces
         for (int x = 0; x < spaces[0].length; x++)
-        { 
+        {
             for (int y = 0; y < spaces[1].length; y++)
             {
                 boolean light = ( (x + y) % 2 != 0 ); // checkerboard space colors
@@ -47,13 +47,13 @@ public class ChessBoard extends GridPane
     public void setActiveSpace(Space s)
     {
         // Remove style from old active space
-        if (this.activeSpace != null) 
+        if (this.activeSpace != null)
             this.activeSpace.getStyleClass().removeAll("chess-space-active");
 
         this.activeSpace = s;
 
         // Add style to new active space
-        if (this.activeSpace != null) 
+        if (this.activeSpace != null)
             this.activeSpace.getStyleClass().add("chess-space-active");
     }
 
@@ -118,7 +118,7 @@ public class ChessBoard extends GridPane
         if (activeSpace != null &&
         activeSpace.getPiece() != null &&
         clickedSpace.getPieceColor() != activeSpace.getPieceColor())
-        {            
+        {
             MoveInfo p;
             p = new MoveInfo(activeSpace.getX(), activeSpace.getY(), x, y);
 
@@ -138,7 +138,7 @@ public class ChessBoard extends GridPane
             //decouples space from space on board
             this.setActiveSpace(null);
         }
-        else 
+        else
         {
             //if there's a piece on the selected square when no active square
             if (spaces[x][y].getPiece() != null)
@@ -166,7 +166,7 @@ public class ChessBoard extends GridPane
         return true;
     }
 
-    // Proccess a move after it has been made by a player
+    // Process a move after it has been made by a player
     protected boolean processMove(MoveInfo p)
     {
         if (moveIsValid(p))
@@ -183,7 +183,7 @@ public class ChessBoard extends GridPane
         }
     }
 
-    // Proccess an opponent's move
+    // Process an opponent's move
     public void processOpponentMove(MoveInfo p)
     {
         if (processMove(p))
@@ -227,53 +227,59 @@ public class ChessBoard extends GridPane
         piece = oldSpace.getPiece();
         moves = piece.getPieceMoves();
         boolean matchesPieceMoves = false;
-        
+
         //for Pieces that move more than 1 base move (Bishop, Rook, Queen)
         int multiMoveCount;
-        double smushedGapX;
-        double smushedGapY;
+        int stretchedMoveX;
+        int stretchedMoveY;
 
         //labels this loop to break out later
         MoveLoop:
         for (MoveList m : moves)
-        {//iterates through mutiple times if has multiple possible moves
+        {//iterates through multiple times if has multiple possible moves
             multiMoveCount = 1;
             if(piece.usesSingleMove() == false) {multiMoveCount = 8;}
 
-            //iterates multiple times if multimove to find "reduced" move
-            //may iterate through extra times off board, those moves already eliminated.
-            //While there are DEFINITELY more efficient ways of doing this,
-            //This one is currently working, and it is thus currently superior.
-            for(; multiMoveCount > 0; multiMoveCount--)
+            boolean hasCollided = false;
+
+            for(int c = 1; c <= multiMoveCount; c++)
             {
-                //"reduces" move to try to turn it into a MoveList base move
-                //wasteful, but will exist iff the move is a "stretched" base move
-                smushedGapX = p.getGapX() / (multiMoveCount + 0.0);
-                smushedGapY = p.getGapY() / (multiMoveCount + 0.0);
-                
-                //Is the double really an int? (to avoid integer division false positives)
-                if(smushedGapX % 1 == 0 && smushedGapY % 1 == 0)
-                {   //is the reduced move a valid move
-                    if ( m.isEqual( (int) smushedGapX, (int) smushedGapY ) )
-                    {
-                        matchesPieceMoves = true;
-                        //breaks out of MoveLoop (both loops)
-                        break MoveLoop;
-                    }
+                //if the prior run hit a piece of opponent's color, done with this move
+                if (hasCollided){break;}
+
+                //stretches a base move out to see if it matches the move made
+                stretchedMoveX = m.getX() * c;
+                stretchedMoveY = m.getY() * c;
+
+                Space tempSpace;
+
+                //If OOB, go to next move of the piece -- ensures space exists later
+                try
+                {
+                    tempSpace = spaces[p.getOldX() + stretchedMoveX]
+                    [p.getOldY() + stretchedMoveY];
+                }
+                catch (Exception e) { break; }
+
+                //handles piece collision and capturing
+                if(tempSpace.isOccupied())
+                {
+                    hasCollided = true;
+                    boolean piecesSameColor = tempSpace.getPiece().getColor() == oldSpace.getPiece().getColor();
+                    //stops checking this move if pieces are the same color
+                    if (piecesSameColor){ break; }
+                }
+
+                //if stretched move matches made move
+                if ( p.getGapX() == stretchedMoveX && p.getGapY() == stretchedMoveY)
+                {
+                    matchesPieceMoves = true;
+                    //breaks out of MoveLoop (both loops)
+                    break MoveLoop;
                 }
             }
         }
         if (!matchesPieceMoves) { return false; }
-
-        // Piece capturing logic
-        if (newSpace.isOccupied())
-        {
-            Piece movedPiece = oldSpace.getPiece();
-            Piece capturedPiece = newSpace.getPiece();
-
-            // Cannot capture own piece
-            if (movedPiece.getColor() == capturedPiece.getColor()) { return false; }
-        }
 
         return true;
     }
