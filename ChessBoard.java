@@ -15,7 +15,7 @@ public class ChessBoard extends GridPane
 
         // initialize 8x8 array of spaces
         for (int x = 0; x < spaces[0].length; x++)
-        { 
+        {
             for (int y = 0; y < spaces[1].length; y++)
             {
                 boolean light = ( (x + y) % 2 != 0 ); // checkerboard space colors
@@ -47,13 +47,13 @@ public class ChessBoard extends GridPane
     public void setActiveSpace(Space s)
     {
         // Remove style from old active space
-        if (this.activeSpace != null) 
+        if (this.activeSpace != null)
             this.activeSpace.getStyleClass().removeAll("chess-space-active");
 
         this.activeSpace = s;
 
         // Add style to new active space
-        if (this.activeSpace != null) 
+        if (this.activeSpace != null)
             this.activeSpace.getStyleClass().add("chess-space-active");
     }
 
@@ -118,7 +118,7 @@ public class ChessBoard extends GridPane
         if (activeSpace != null &&
         activeSpace.getPiece() != null &&
         clickedSpace.getPieceColor() != activeSpace.getPieceColor())
-        {            
+        {
             MoveInfo p;
             p = new MoveInfo(activeSpace.getX(), activeSpace.getY(), x, y);
 
@@ -138,7 +138,7 @@ public class ChessBoard extends GridPane
             //decouples space from space on board
             this.setActiveSpace(null);
         }
-        else 
+        else
         {
             //if there's a piece on the selected square when no active square
             if (spaces[x][y].getPiece() != null)
@@ -166,7 +166,7 @@ public class ChessBoard extends GridPane
         return true;
     }
 
-    // Proccess a move after it has been made by a player
+    // Process a move after it has been made by a player
     protected boolean processMove(MoveInfo p)
     {
         if (moveIsValid(p))
@@ -183,7 +183,7 @@ public class ChessBoard extends GridPane
         }
     }
 
-    // Proccess an opponent's move
+    // Process an opponent's move
     public void processOpponentMove(MoveInfo p)
     {
         if (processMove(p))
@@ -236,17 +236,17 @@ public class ChessBoard extends GridPane
         //labels this loop to break out later
         MoveLoop:
         for (MoveList m : moves)
-        {//iterates through mutiple times if has multiple possible moves
+        {//iterates through multiple times if has multiple possible moves
             multiMoveCount = 1;
             if(piece.usesSingleMove() == false) {multiMoveCount = 8;}
-            
+
             boolean hasCollided = false;
-            
+
             for(int c = 1; c <= multiMoveCount; c++)
             {
                 //if the prior run hit a piece of opponent's color, done with this move
                 if (hasCollided){break;}
-                
+
                 //stretches a base move out to see if it matches the move made
                 stretchedMoveX = m.getX() * c;
                 stretchedMoveY = m.getY() * c;
@@ -260,7 +260,7 @@ public class ChessBoard extends GridPane
                     [p.getOldY() + stretchedMoveY];
                 }
                 catch (Exception e) { break; }
-                
+
                 //handles piece collision and capturing
                 if(tempSpace.isOccupied())
                 {
@@ -269,7 +269,7 @@ public class ChessBoard extends GridPane
                     //stops checking this move if pieces are the same color
                     if (piecesSameColor){ break; }
                 }
-                
+
                 //if stretched move matches made move
                 if ( p.getGapX() == stretchedMoveX && p.getGapY() == stretchedMoveY)
                 {
@@ -280,7 +280,7 @@ public class ChessBoard extends GridPane
             }
         }
         if (!matchesPieceMoves) { return false; }
-        
+
         return true;
     }
 }
