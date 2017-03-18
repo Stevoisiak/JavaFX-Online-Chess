@@ -24,4 +24,13 @@ public class King extends Piece
 
     protected boolean usesSingleMove(){return true;}
     protected String getName(){return "king";}
+    protected boolean canMove(int gapX, int gapY)
+    {
+        for (MoveList m : this.getPieceMoves())
+        {
+            if (m.isEqual(gapX, gapY))
+                return true;
+        }
+        return false;
+    }
 }
