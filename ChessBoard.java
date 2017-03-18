@@ -274,6 +274,7 @@ public class ChessBoard extends GridPane
                 if ( p.getGapX() == stretchedMoveX && p.getGapY() == stretchedMoveY)
                 {
                     matchesPieceMoves = true;
+                    piece.setHasMoved(true);
                     //breaks out of MoveLoop (both loops)
                     break MoveLoop;
                 }
