@@ -40,7 +40,7 @@ public class Space extends Button
         return this.piece;
     }
 
-    // Sets the piece (TODO: Capture piece), draws image of piece on space
+    // Sets the piece, draws image of piece on space
     public void setPiece(Piece piece)
     {
         this.piece = piece;

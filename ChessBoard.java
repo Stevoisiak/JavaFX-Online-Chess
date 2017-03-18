@@ -274,6 +274,9 @@ public class ChessBoard extends GridPane
                 if ( p.getGapX() == stretchedMoveX && p.getGapY() == stretchedMoveY)
                 {
                     matchesPieceMoves = true;
+
+                    if (pawnValidityCheck(p) == false) {return false;}
+
                     piece.setHasMoved(true);
                     //breaks out of MoveLoop (both loops)
                     break MoveLoop;
@@ -281,6 +284,40 @@ public class ChessBoard extends GridPane
             }
         }
         if (!matchesPieceMoves) { return false; }
+
+        return true;
+    }
+
+    protected boolean pawnValidityCheck(MoveInfo p)
+    {
+        //this should only be called in moveIsValid, so checks are done there
+        Space oldSpace = spaces[p.getOldX()][p.getOldY()];
+        Space newSpace = spaces[p.getNewX()][p.getNewY()];
+        Piece piece = oldSpace.getPiece();
+
+        //If it's not a pawn, it passes
+        if ( !piece.getName().equals("pawn")) {return true;}
+
+        //if this is a "straight" move
+        if (p.getGapX() == 0)
+        {
+            //black is negative 1, white is positive 1, for direction later
+            int colorMod = p.getGapY() / Math.abs(p.getGapY());
+
+            //if there's a piece in the way for a straight move, don't allow move
+            for(int c = 1; c <= Math.abs(p.getGapY()); c++)
+            {
+                if (  spaces[p.getOldX()][p.getOldY() + (c * colorMod)].isOccupied()  )
+                {return false;}
+            }
+        }
+        else //if it's a diagonal move
+        {
+            //if the target square doesn't have an opposing piece, don't allow move
+            if ( (!newSpace.isOccupied()) ||
+                    piece.getColor() == newSpace.getPiece().getColor())
+            {return false;}
+        }
 
         return true;
     }
