@@ -1,5 +1,5 @@
 # JavaFX-Online-Chess [![Build Status](https://travis-ci.org/Stevoisiak/JavaFX-Online-Chess.svg?branch=master)](https://travis-ci.org/Stevoisiak/JavaFX-Online-Chess)
-Simple chess program written in JavaFX. Note that by default this program uses localhost for multiplayer.
+An (incomplete) chess program written in JavaFX. Note that by default this program uses localhost for multiplayer.
 
 ## Feature List
 
