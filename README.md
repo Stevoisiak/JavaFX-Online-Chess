@@ -18,7 +18,7 @@ An (incomplete) chess program written in JavaFX. Note that by default this progr
 
 ## Missing Features
 
-* Special pawn rules (Piece promotion, en passant, only capture diagonally, situational 2 space movement, etc)
+* Special pawn rules (Piece promotion, en passant)
 * Indicators for check, checkmate, and stalemate
 * Handling for edge case where client & server disagree on whether a move is valid
 * Allow castling
@@ -39,16 +39,12 @@ An (incomplete) chess program written in JavaFX. Note that by default this progr
 * Implement check, checkmate, & stalemate
 * Add ability to surrender
 * Option to start a new game without closing connection
-* Switch project to public on GitHub
 * Add indicator showing which player's turn it is
 
 ## TODO list
 * Piece movement
-  * ~~Create list of valid movements for each piece~~
-  * ~~Check against moveList when calling moveIsValid(). [ChessBoard.java]~~
-    * ~~Allow Bishop, Rook, & Queen to move further across the board~~
-    * Prevent Bishop, Rook, & Queen from moving over other pieces
-  * Create exceptions for pawn movement.
+  * Prevent Bishop, Rook, & Queen from moving over other pieces
+  * Implement Pawn promotion and en passant
   * Implement castling
 * Board rules
   * Pawn piece promotion.
@@ -56,8 +52,6 @@ An (incomplete) chess program written in JavaFX. Note that by default this progr
   * Implement stalemate.
   * When a piece is selected, highlight spaces it can move to
 * GUI
-  * ~~Add option for offline mode.~~
-  * ~~Only allow White player to make the first move.~~
   * Add label to show which player's turn it is.
   * Add "surrender" button
 * Documentation
